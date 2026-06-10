@@ -1,3 +1,6 @@
+from core.riscos import RISCOS_ACOES
+
+
 ACOES_SCRIPT = {
     'executar_restaurar_relogio_para_hora_local_padrao': {'nome': 'Restaurar Relógio para Hora Local (Padrão)', 'arquivo': 'scripts/windows_tweaks/script_relogio_utc.ps1', 'destrutivo': False},
     'executar_verificar_status_do_antivirus_wmi': {'nome': 'Verificar Status do Antivírus (WMI)', 'arquivo': 'scripts/windows_tweaks/script_status_antivirus.ps1', 'destrutivo': False},
@@ -28,3 +31,6 @@ ACOES_SCRIPT = {
     'executar_importar_perfil_nvidia_lynch': {'nome': 'Importar Perfil NVIDIA (Lynch)', 'arquivo': 'scripts/windows_tweaks/script_importar_perfil_nvidia.ps1', 'destrutivo': True, 'modal_titulo': 'Confirmar Importação de Perfil', 'modal_mensagem': "Esta ação importará o perfil de otimização personalizado LynchBoostProfile.nip para o seu painel de controle NVIDIA. IMPORTANTE: No Painel de Controle NVIDIA, certifique-se de marcar a 2ª opção ('Use as configurações de imagens avançadas em 3D') para que as otimizações entrem em vigor. Deseja prosseguir?"},
     'executar_eliminar_input_lag_competitivo': {'nome': 'Eliminar Input Lag (Competitivo)', 'arquivo': 'scripts/windows_tweaks/script_reduzir_input_lag.ps1', 'destrutivo': True, 'modal_titulo': 'Otimização Agressiva de Input Lag', 'modal_mensagem': 'ATENÇÃO: Esta ação desativará temporizadores de energia do Windows, forçará Tela Cheia Exclusiva nos jogos e mudará a prioridade do seu mouse para reduzir a latência ao máximo. Deseja aplicar?'},
 }
+
+for _acao_especial, _metadata in ACOES_SCRIPT.items():
+    _metadata["risco"] = RISCOS_ACOES[_acao_especial]

@@ -5,6 +5,7 @@ import os
 import subprocess
 from core import runner, atalhos, gerenciador_json, diagnostico
 from core.acoes_script import ACOES_SCRIPT
+from core.riscos import risco_exige_confirmacao
 from ui import modais
 
 # Configuracao visual padrao
@@ -1089,7 +1090,7 @@ class PCBoosterHub(ctk.CTk):
 
             threading.Thread(target=run_thread, daemon=True).start()
 
-        if acao.get("destrutivo"):
+        if acao.get("destrutivo") or risco_exige_confirmacao(acao["risco"]):
             titulo = acao.get("modal_titulo", "Aviso: Ação Destrutiva")
             mensagem = acao.get("modal_mensagem", "Deseja executar esta ação?")
 
