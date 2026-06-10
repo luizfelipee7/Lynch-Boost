@@ -80,6 +80,25 @@ def test_gitignore_excludes_generated_artifacts():
     assert missing == []
 
 
+def test_build_manifest_requires_administrator():
+    manifest = PROJECT_ROOT / "packaging" / "LynchBoost.exe.manifest"
+
+    assert manifest.exists()
+    text = manifest.read_text(encoding="utf-8")
+    assert 'requestedExecutionLevel level="requireAdministrator"' in text
+    assert 'uiAccess="false"' in text
+
+
+def test_pyinstaller_spec_uses_admin_manifest_and_excludes_third_party_optimizers():
+    spec = PROJECT_ROOT / "LynchBoost.spec"
+
+    assert spec.exists()
+    text = spec.read_text(encoding="utf-8")
+    assert 'manifest="packaging/LynchBoost.exe.manifest"' in text
+    assert 'Tree("scripts/windows_tweaks", prefix="scripts/windows_tweaks")' in text
+    assert 'Tree("scripts/otimizadores"' not in text
+
+
 def test_project_owned_files_do_not_expose_local_user_paths():
     offenders = []
     ignored_roots = {

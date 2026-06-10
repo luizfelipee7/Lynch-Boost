@@ -34,3 +34,4 @@ env/
 build/
 dist/
 *.spec
+!LynchBoost.spec
