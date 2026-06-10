@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs e temporarios do app
+output.log
+.tmp/
+
+# Credenciais e segredos locais
+.env
+.env.*
+credentials.json
+token.json
+*.pem
+*.pfx
+*.p12
+*.key
+
+# Sistema operacional/editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Ambientes locais
+.venv/
+venv/
+env/
+
+# Builds futuros
+build/
+dist/
+*.spec

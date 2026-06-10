@@ -1,0 +1,346 @@
+{
+  "config_windows": [
+    {
+      "nome": "Efeitos Visuais de Desempenho",
+      "acao_especial": "abrir_menu_desempenho",
+      "destrutivo": false
+    },
+    {
+      "nome": "Alternar Menu de Contexto (Win 10/11)",
+      "acao_especial": "abrir_modal_menu_contexto",
+      "destrutivo": false
+    },
+    {
+      "nome": "Explorador no Meu Computador",
+      "acao_especial": "abrir_modal_explorer_this_pc",
+      "destrutivo": false
+    },
+    {
+      "nome": "Mostrar Extensões de Arquivo",
+      "acao_especial": "abrir_modal_show_extensions",
+      "destrutivo": false
+    },
+    {
+      "nome": "Desativar Home e Galeria",
+      "acao_especial": "abrir_modal_home_galeria",
+      "destrutivo": false
+    },
+    {
+      "nome": "Ocultar Pasta Linux (WSL)",
+      "acao_especial": "abrir_modal_wsl_icon",
+      "destrutivo": false
+    },
+    {
+      "nome": "Inicialização Rápida (Fast Startup)",
+      "acao_especial": "abrir_modal_fast_startup",
+      "destrutivo": false
+    },
+    {
+      "nome": "Finalizar Tarefa (Barra de Tarefas)",
+      "acao_especial": "abrir_modal_finalizar_tarefa",
+      "destrutivo": false
+    },
+    {
+      "nome": "Bloquear Pop-ups, Dicas e Anúncios",
+      "acao_especial": "abrir_modal_desativar_popups",
+      "destrutivo": false
+    },
+    {
+      "nome": "Restaurar Relógio para Hora Local (Padrão)",
+      "destrutivo": false,
+      "acao_especial": "executar_restaurar_relogio_para_hora_local_padrao"
+    },
+    {
+      "nome": "Verificar Status do Antivírus (WMI)",
+      "destrutivo": false,
+      "acao_especial": "executar_verificar_status_do_antivirus_wmi"
+    },
+    {
+      "nome": "Personalização (Visual e Cores)",
+      "acao_especial": "abrir_menu_personalizacao",
+      "destrutivo": false
+    },
+    {
+      "nome": "Desativar Linha do Tempo e Widgets",
+      "acao_especial": "abrir_modal_desativar_activity_feed",
+      "destrutivo": false
+    }
+  ],
+  "debloat_servicos": [
+    {
+      "nome": "Desativar Telemetria e Rastreadores",
+      "destrutivo": true,
+      "acao_especial": "executar_desativar_telemetria_e_rastreadores"
+    },
+    {
+      "nome": "Desativar Manutenção em Segundo Plano",
+      "destrutivo": true,
+      "acao_especial": "executar_desativar_manutencao_em_segundo_plano"
+    },
+    {
+      "nome": "Otimizar Políticas de Grupo (GPO)",
+      "destrutivo": true,
+      "acao_especial": "executar_otimizar_politicas_de_grupo_gpo"
+    },
+    {
+      "nome": "Otimizar Serviços do Windows",
+      "destrutivo": true,
+      "acao_especial": "executar_otimizar_servicos_do_windows"
+    },
+    {
+      "nome": "Debloat do Windows 11 Moderno",
+      "destrutivo": true,
+      "acao_especial": "executar_debloat_do_windows_11_moderno"
+    },
+    {
+      "nome": "OneDrive",
+      "destrutivo": true,
+      "acao_especial": "executar_onedrive"
+    },
+    {
+      "nome": "Desativar Sincronizacao de Configuracoes",
+      "acao_especial": "abrir_modal_desativar_sincronizacao",
+      "destrutivo": false
+    },
+    {
+      "nome": "Desativar Experimentos do Windows",
+      "acao_especial": "abrir_modal_desativar_experimentos",
+      "destrutivo": false
+    },
+    {
+      "nome": "Desinstalar somente Xbox Game Bar",
+      "destrutivo": true,
+      "acao_especial": "executar_desinstalar_somente_xbox_game_bar"
+    }
+  ],
+  "limpeza_armazenamento": [
+    {
+      "nome": "Limpar Cache de Apps e Browsers",
+      "destrutivo": true,
+      "acao_especial": "executar_limpar_cache_de_apps_e_browsers"
+    },
+    {
+      "nome": "Limpar Arquivos Temporarios",
+      "destrutivo": true,
+      "acao_especial": "executar_limpar_arquivos_temporarios"
+    },
+    {
+      "nome": "Desativar Hibernacao",
+      "destrutivo": true,
+      "acao_especial": "executar_desativar_hibernacao"
+    },
+    {
+      "nome": "Manutenção do Sistema (Disco e Rede)",
+      "destrutivo": true,
+      "acao_especial": "executar_manutencao_do_sistema_disco_e_rede"
+    },
+    {
+      "nome": "Reparar Integridade do Windows",
+      "destrutivo": true,
+      "acao_especial": "executar_reparar_integridade_do_windows"
+    },
+    {
+      "nome": "Limpeza do Armazenamento de Componentes (WinSxS)",
+      "destrutivo": true,
+      "acao_especial": "executar_limpeza_do_armazenamento_de_componentes_winsxs"
+    },
+    {
+      "nome": "Corrigir Windows Update",
+      "destrutivo": true,
+      "acao_especial": "executar_corrigir_windows_update"
+    },
+    {
+      "nome": "Apagar Pasta Windows.old",
+      "destrutivo": true,
+      "acao_especial": "executar_apagar_pasta_windows_old"
+    },
+    {
+      "nome": "BSOD Event Log",
+      "destrutivo": false,
+      "acao_especial": "executar_bsod_event_log"
+    },
+    {
+      "nome": "Ativar Cache de Gravação do Disco",
+      "destrutivo": true,
+      "acao_especial": "executar_ativar_cache_de_gravacao_do_disco"
+    },
+    {
+      "nome": "Otimização Inteligente de Unidades",
+      "destrutivo": true,
+      "acao_especial": "executar_otimizacao_inteligente_de_unidades"
+    },
+    {
+      "nome": "Desativar Economia de Energia do Disco (HIPM/DIPM)",
+      "acao_especial": "abrir_modal_latencia_disco",
+      "destrutivo": false
+    },
+    {
+      "nome": "Limpar Dispositivos Fantasmas (PnP)",
+      "acao_especial": "abrir_modal_limpar_dispositivos",
+      "destrutivo": false
+    },
+    {
+      "nome": "Esvaziar Lixeira do PC",
+      "acao_especial": "abrir_modal_limpar_lixeira",
+      "destrutivo": false
+    }
+  ],
+  "memory_tweaks": [
+    {
+      "nome": "Otimizar Memória RAM (MMAgent & Paging)",
+      "acao_especial": "abrir_modal_otimizar_memoria",
+      "destrutivo": false
+    },
+    {
+      "nome": "Limpar Cache de Memória RAM (Standby)",
+      "acao_especial": "abrir_modal_limpar_cache_ram",
+      "destrutivo": false
+    }
+  ],
+  "cpu_energia": [
+    {
+      "nome": "Gerenciar Plano de Energia",
+      "acao_especial": "abrir_menu_energia",
+      "destrutivo": false
+    }
+  ],
+  "gaming": [
+    {
+      "nome": "CS2 High CPU Priority",
+      "destrutivo": true,
+      "acao_especial": "executar_cs2_high_cpu_priority"
+    },
+    {
+      "nome": "Valorant High CPU Priority",
+      "destrutivo": true,
+      "acao_especial": "executar_valorant_high_cpu_priority"
+    },
+    {
+      "nome": "Ativar Game Mode do Windows",
+      "acao_especial": "abrir_modal_ativar_game_mode",
+      "destrutivo": false
+    },
+    {
+      "nome": "Desativar Gravação de Tela (Game DVR)",
+      "acao_especial": "abrir_modal_desativar_game_dvr",
+      "destrutivo": false
+    }
+  ],
+  "rede_latencia": [
+    {
+      "nome": "Otimizar DNS (Avançado)",
+      "acao_especial": "abrir_menu_dns",
+      "destrutivo": false,
+      "modal_titulo": "Configurador de DNS",
+      "modal_mensagem": "Deseja abrir o painel avançado de configuração de DNS?"
+    },
+    {
+      "nome": "Redução Global de Latência (Ping/Hardware)",
+      "destrutivo": true,
+      "acao_especial": "executar_reducao_global_de_latencia_ping_hardware"
+    },
+    {
+      "nome": "Redefinir Configurações de Rede",
+      "destrutivo": true,
+      "acao_especial": "executar_redefinir_configuracoes_de_rede"
+    },
+    {
+      "nome": "Ajustes de Latência e CPU AMD",
+      "acao_especial": "abrir_modal_energia_amd",
+      "destrutivo": false
+    },
+    {
+      "nome": "Ajustes de Latência e CPU Intel",
+      "acao_especial": "abrir_modal_energia_intel",
+      "destrutivo": false
+    },
+    {
+      "nome": "Desativar Timer Coalescing",
+      "acao_especial": "abrir_modal_timer_coalescing",
+      "destrutivo": false
+    },
+    {
+      "nome": "Otimização de Placa de Vídeo (GPU)",
+      "acao_especial": "abrir_modal_otimizar_gpu",
+      "destrutivo": false
+    },
+    {
+      "nome": "Otimização de GPU Global",
+      "destrutivo": true,
+      "acao_especial": "executar_otimizacao_de_gpu_global"
+    },
+    {
+      "nome": "Limpar Cache de Shaders de GPU",
+      "destrutivo": true,
+      "acao_especial": "executar_limpar_cache_de_shaders_de_gpu"
+    },
+    {
+      "nome": "Segurança do Kernel e Mitigações (FPS Extremo)",
+      "acao_especial": "abrir_modal_seguranca_avancada",
+      "destrutivo": false
+    },
+    {
+      "nome": "Otimização de Registro (Avançado)",
+      "acao_especial": "abrir_menu_otimizacao",
+      "destrutivo": false,
+      "modal_titulo": "Otimizador de Registro",
+      "modal_mensagem": "Deseja abrir o painel de otimização de registro?"
+    },
+    {
+      "nome": "Otimizar Latência USB (PowerSavings & MSI)",
+      "acao_especial": "abrir_modal_latencia_usb",
+      "destrutivo": false
+    },
+    {
+      "nome": "Importar Perfil NVIDIA (Lynch)",
+      "destrutivo": true,
+      "acao_especial": "executar_importar_perfil_nvidia_lynch"
+    }
+  ],
+  "mouse_teclado": [
+    {
+      "nome": "Eliminar Input Lag (Competitivo)",
+      "destrutivo": true,
+      "acao_especial": "executar_eliminar_input_lag_competitivo"
+    },
+    {
+      "nome": "Acelerar Taxa de Repetição do Teclado",
+      "acao_especial": "abrir_modal_repeticao_teclado",
+      "destrutivo": false
+    },
+    {
+      "nome": "Otimização de Mouse (Aceleração)",
+      "acao_especial": "abrir_menu_mouse",
+      "destrutivo": false,
+      "modal_titulo": "Precisão de Ponteiro",
+      "modal_mensagem": "Deseja abrir o painel de otimização de mouse?"
+    },
+    {
+      "nome": "Teclas de Aderência (Sticky Keys)",
+      "acao_especial": "abrir_modal_sticky_keys",
+      "destrutivo": false
+    },
+    {
+      "nome": "Forçar Teclado ABNT2",
+      "acao_especial": "abrir_modal_forcar_abnt2",
+      "destrutivo": false
+    },
+    {
+      "nome": "Teclado Layout EUA (60%)",
+      "acao_especial": "abrir_modal_teclado_eua",
+      "destrutivo": false
+    },
+    {
+      "nome": "Dispositivos de Som (Gerenciador)",
+      "acao_especial": "abrir_menu_audio",
+      "destrutivo": false
+    }
+  ],
+  "instalacao": [
+    {
+      "nome": "Instalador em Massa (Package Manager)",
+      "acao_especial": "abrir_menu_instalacao",
+      "destrutivo": false
+    }
+  ]
+}
