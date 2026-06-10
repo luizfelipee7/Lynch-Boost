@@ -17,6 +17,9 @@ token.json
 *.p12
 *.key
 
+# Regras locais do agente
+.agents/
+
 # Sistema operacional/editor
 .DS_Store
 Thumbs.db
