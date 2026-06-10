@@ -209,38 +209,10 @@ class PCBoosterHub(ctk.CTk):
         # Inicializar contagem de status por categoria
         self._inicializar_status()
 
-        # Registrar fontes San Francisco para uso nos scripts
-        self._registrar_fontes_sf()
-
         # Construir as interfaces
         self.criar_dashboard()
         self._criar_telas_detalhe()
         self.criar_tela_inicial()  # Splash por cima de tudo
-
-    def _registrar_fontes_sf(self):
-        """Registra as fontes San Francisco (SFUIText) via tkinter.font."""
-        import tkinter.font as tkfont
-        base = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                            "..", "fontes", "San Francisco", "SFUIText")
-        _sf_files = {
-            "SF UI Text Regular":  "SFUIText-Regular.otf",
-            "SF UI Text Medium":   "SFUIText-Medium.otf",
-            "SF UI Text Bold":     "SFUIText-Bold.otf",
-            "SF UI Text Semibold": "SFUIText-Semibold.otf",
-        }
-        for family, filename in _sf_files.items():
-            path = os.path.normpath(os.path.join(base, filename))
-            if os.path.exists(path):
-                try:
-                    self.tk.call("font", "create", family,
-                                 "-family", family, "-size", 13)
-                    self.tk.call("load", path)
-                except Exception:
-                    pass  # Fonte já registrada ou não suportada
-        self._sf_regular  = "SF UI Text Regular"
-        self._sf_medium   = "SF UI Text Medium"
-        self._sf_bold     = "SF UI Text Bold"
-        self._sf_semibold = "SF UI Text Semibold"
 
     # ============================================================
     # CONSOLE DE LOG
@@ -634,7 +606,7 @@ class PCBoosterHub(ctk.CTk):
         ctk.CTkLabel(
             _hdr,
             text=f"{grupo_info.get('emoji', '⚙️')}  {grupo_info['titulo']}",
-            font=(getattr(self, '_sf_semibold', 'Segoe UI'), 13, "bold"),
+            font=("Segoe UI", 13, "bold"),
             text_color="#ffffff", anchor="w"
         ).pack(side="left")
 
@@ -671,8 +643,7 @@ class PCBoosterHub(ctk.CTk):
 
     def _criar_item_script(self, parent, script_data, categoria, item_id):
         """Cria um item de script como botão arredondado com indicador de status ✅."""
-        sf = getattr(self, '_sf_regular', 'Segoe UI')
-        sf_bold = getattr(self, '_sf_bold', 'Segoe UI')
+        fonte_padrao = "Segoe UI"
         row = ctk.CTkFrame(
             parent,
             fg_color="#343746",
@@ -694,7 +665,7 @@ class PCBoosterHub(ctk.CTk):
         text_lbl = ctk.CTkLabel(
             row,
             text=script_data["nome"],
-            font=(sf, 13),
+            font=(fonte_padrao, 13),
             text_color="#e8e8f0",
             anchor="w", cursor="hand2"
         )
@@ -711,16 +682,16 @@ class PCBoosterHub(ctk.CTk):
                 row.configure(fg_color="#234a31", border_color="#22c55e")
             else:
                 row.configure(fg_color="#44475a", border_color="#3a3d52")
-            text_lbl.configure(font=(sf, 13, "bold"), text_color="#ffffff")
+            text_lbl.configure(font=(fonte_padrao, 13, "bold"), text_color="#ffffff")
 
         def on_leave(e):
             # Se já estiver concluído, mantém o fundo forest green e a borda verde
             if status_lbl.cget("text") == "✅":
                 row.configure(fg_color="#1b3a24", border_color="#22c55e")
-                text_lbl.configure(font=(sf, 13, "bold"), text_color="#ffffff")
+                text_lbl.configure(font=(fonte_padrao, 13, "bold"), text_color="#ffffff")
             else:
                 row.configure(fg_color="#343746", border_color="#3a3d52")
-                text_lbl.configure(font=(sf, 13), text_color="#e8e8f0")
+                text_lbl.configure(font=(fonte_padrao, 13), text_color="#e8e8f0")
 
         # Clique — usa _NullBtn para compatibilidade com modais que chamam btn.configure()
         _nb = _NullBtn()
@@ -753,7 +724,7 @@ class PCBoosterHub(ctk.CTk):
 
         tema = TEMAS_CATEGORIAS.get(categoria, {})
         accent = tema.get("hover_border", "#6366f1")
-        sf = getattr(self, "_sf_medium", "Segoe UI")
+        fonte_padrao = "Segoe UI"
 
         # Container da linha como botão
         row = ctk.CTkFrame(
@@ -786,7 +757,7 @@ class PCBoosterHub(ctk.CTk):
         text_lbl = ctk.CTkLabel(
             row,
             text=atalho_info.get("texto", ""),
-            font=(sf, 13),
+            font=(fonte_padrao, 13),
             text_color="#7878a0",
             anchor="w", cursor="hand2"
         )
@@ -799,13 +770,13 @@ class PCBoosterHub(ctk.CTk):
             row.configure(fg_color="#44475a")
             badge.configure(fg_color=accent)
             badge_lbl.configure(text_color="#ffffff")
-            text_lbl.configure(font=(sf, 13, "bold"), text_color="#ffffff")
+            text_lbl.configure(font=(fonte_padrao, 13, "bold"), text_color="#ffffff")
 
         def on_leave(e):
             row.configure(fg_color="#343746")
             badge.configure(fg_color="transparent")
             badge_lbl.configure(text_color=accent)
-            text_lbl.configure(font=(sf, 13), text_color="#7878a0")
+            text_lbl.configure(font=(fonte_padrao, 13), text_color="#7878a0")
 
         def on_click(e, fn=cmd_fn):
             self.limpar_console_silencioso()
@@ -851,8 +822,7 @@ class PCBoosterHub(ctk.CTk):
             text_lbl = getattr(self, "item_text_labels", {}).get(item_id)
             if text_lbl:
                 try:
-                    sf = getattr(self, '_sf_regular', 'Segoe UI')
-                    text_lbl.configure(font=(sf, 13, "bold"), text_color="#ffffff")
+                    text_lbl.configure(font=("Segoe UI", 13, "bold"), text_color="#ffffff")
                 except Exception:
                     pass
 
@@ -906,8 +876,7 @@ class PCBoosterHub(ctk.CTk):
             text_lbl = getattr(self, "item_text_labels", {}).get(item_id)
             if text_lbl:
                 try:
-                    sf = getattr(self, '_sf_regular', 'Segoe UI')
-                    text_lbl.configure(font=(sf, 13), text_color="#e8e8f0")
+                    text_lbl.configure(font=("Segoe UI", 13), text_color="#e8e8f0")
                 except Exception:
                     pass
 
