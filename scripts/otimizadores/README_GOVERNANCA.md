@@ -8,7 +8,7 @@ Regras operacionais:
 - Nao chamar arquivos desta pasta por `config.json`, UI, `core/acoes_script.py` ou `core/runner.py`.
 - Nao executar binarios, `.ps1`, `.cmd` ou `.bat` desta pasta pelo fluxo do produto.
 - Qualquer uso futuro deve ser feito por extracao seletiva, revisao manual e reimplementacao em `scripts/windows_tweaks`.
-- Scripts migrados para `windows_tweaks` devem seguir as regras `.agents`: admin check, sem aliases PowerShell, logs compativeis com a UI e auditoria quando houver impacto no sistema operacional.
+- Scripts migrados para `windows_tweaks` devem seguir as politicas internas do projeto: admin check, sem aliases PowerShell, logs compativeis com a UI e auditoria quando houver impacto no sistema operacional.
 - Arquivos desta pasta nao fazem parte do comportamento ativo do aplicativo.
 
 Barreira tecnica:
