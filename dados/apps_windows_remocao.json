@@ -1,29 +1,18 @@
 {
-  "Recomendado Lynch": [
-    {
-      "id": "3d_viewer",
-      "nome": "3D Viewer",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.Microsoft3DViewer"]
-    },
-    {
-      "id": "camera",
-      "nome": "Camera",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.WindowsCamera"]
-    },
+  "IA e Assistentes": [
     {
       "id": "copilot",
       "nome": "Copilot",
       "tipo": "appx",
       "risco": "destrutivo",
       "recomendado": true,
-      "appx_selectors": ["Microsoft.Copilot", "Microsoft.Windows.Ai.Copilot.Provider"],
-      "appx_patterns": ["*Copilot*"],
+      "appx_selectors": [
+        "Microsoft.Copilot",
+        "Microsoft.Windows.Ai.Copilot.Provider"
+      ],
+      "appx_patterns": [
+        "*Copilot*"
+      ],
       "registry_values": [
         {
           "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot",
@@ -39,71 +28,9 @@
       "tipo": "appx",
       "risco": "destrutivo",
       "recomendado": true,
-      "appx_selectors": ["Microsoft.549981C3F5F10"]
-    },
-    {
-      "id": "get_help",
-      "nome": "Get Help",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.GetHelp"]
-    },
-    {
-      "id": "mail_calendar",
-      "nome": "Mail and Calendar",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["microsoft.windowscommunicationsapps"]
-    },
-    {
-      "id": "maps",
-      "nome": "Maps",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.WindowsMaps"]
-    },
-    {
-      "id": "mixed_reality",
-      "nome": "Mixed Reality",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.MixedReality.Portal"]
-    },
-    {
-      "id": "movies_tv",
-      "nome": "Movies & TV",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.ZuneVideo"]
-    },
-    {
-      "id": "news",
-      "nome": "News",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.BingNews"]
-    },
-    {
-      "id": "office_hub",
-      "nome": "Office 365",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.MicrosoftOfficeHub"]
-    },
-    {
-      "id": "people",
-      "nome": "People",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.People"]
+      "appx_selectors": [
+        "Microsoft.549981C3F5F10"
+      ]
     },
     {
       "id": "recall",
@@ -111,163 +38,24 @@
       "tipo": "feature",
       "risco": "requer_reinicio",
       "recomendado": true,
-      "feature_selectors": ["Recall"],
-      "services_to_disable": ["WSAIFabricSvc"]
-    },
-    {
-      "id": "skype",
-      "nome": "Skype",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.SkypeApp"]
-    },
-    {
-      "id": "solitaire",
-      "nome": "Solitaire Collection",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.MicrosoftSolitaireCollection"]
-    },
-    {
-      "id": "tips",
-      "nome": "Tips",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.Getstarted"]
-    },
-    {
-      "id": "to_do",
-      "nome": "To Do",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.Todos"]
-    },
-    {
-      "id": "voice_recorder",
-      "nome": "Voice Recorder",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.WindowsSoundRecorder"]
-    },
-    {
-      "id": "weather",
-      "nome": "Weather",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.BingWeather"]
-    },
-    {
-      "id": "windows_media_player_modern",
-      "nome": "Windows Media Player (modern)",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.ZuneMusic"]
-    },
-    {
-      "id": "widgets_news",
-      "nome": "Widgets / Noticias",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.WidgetsPlatformRuntime", "MicrosoftWindows.Client.WebExperience"]
+      "feature_selectors": [
+        "Recall"
+      ],
+      "services_to_disable": [
+        "WSAIFabricSvc"
+      ]
     }
   ],
-  "Apps do Print": [
+  "Comunicacao e Pessoas": [
     {
-      "id": "bing_search",
-      "nome": "Bing Search",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["Microsoft.BingSearch"]
-    },
-    {
-      "id": "calculator",
-      "nome": "Calculator",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["Microsoft.WindowsCalculator"]
-    },
-    {
-      "id": "clipchamp",
-      "nome": "Clipchamp",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["Clipchamp.Clipchamp"]
-    },
-    {
-      "id": "clock",
-      "nome": "Clock",
+      "id": "mail_calendar",
+      "nome": "Mail and Calendar",
       "tipo": "appx",
       "risco": "destrutivo",
       "recomendado": true,
-      "appx_selectors": ["Microsoft.WindowsAlarms"]
-    },
-    {
-      "id": "dev_home",
-      "nome": "Dev Home",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["Microsoft.Windows.DevHome"],
-      "registry_delete_paths": ["Registry::HKLM\\Software\\Microsoft\\WindowsUpdate\\Orchestrator\\UScheduler_Oobe\\DevHomeUpdate"]
-    },
-    {
-      "id": "family",
-      "nome": "Family",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["MicrosoftCorporationII.MicrosoftFamily"]
-    },
-    {
-      "id": "feedback_hub",
-      "nome": "Feedback Hub",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.WindowsFeedbackHub"]
-    },
-    {
-      "id": "game_assist",
-      "nome": "Game Assist",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["Microsoft.Edge.GameAssist"]
-    },
-    {
-      "id": "microsoft_store",
-      "nome": "Microsoft Store",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["Microsoft.WindowsStore", "Microsoft.StorePurchaseApp"]
-    },
-    {
-      "id": "notepad_modern",
-      "nome": "Notepad (modern)",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["Microsoft.WindowsNotepad"]
-    },
-    {
-      "id": "onenote",
-      "nome": "OneNote",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["Microsoft.Office.OneNote"]
+      "appx_selectors": [
+        "microsoft.windowscommunicationsapps"
+      ]
     },
     {
       "id": "outlook",
@@ -275,68 +63,12 @@
       "tipo": "appx",
       "risco": "destrutivo",
       "recomendado": false,
-      "appx_selectors": ["Microsoft.OutlookForWindows"],
-      "registry_delete_paths": ["Registry::HKLM\\Software\\Microsoft\\WindowsUpdate\\Orchestrator\\UScheduler_Oobe\\OutlookUpdate"]
-    },
-    {
-      "id": "paint",
-      "nome": "Paint",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["Microsoft.Paint"],
-      "capability_selectors": ["Microsoft.Windows.MSPaint"]
-    },
-    {
-      "id": "paint_3d",
-      "nome": "Paint 3D",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["Microsoft.MSPaint"]
-    },
-    {
-      "id": "photos",
-      "nome": "Photos",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["Microsoft.Windows.Photos"]
-    },
-    {
-      "id": "power_automate",
-      "nome": "Power Automate",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["Microsoft.PowerAutomateDesktop"]
-    },
-    {
-      "id": "quick_assist",
-      "nome": "Quick Assist",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["MicrosoftCorporationII.QuickAssist"],
-      "capability_selectors": ["App.Support.QuickAssist"]
-    },
-    {
-      "id": "snipping_tool",
-      "nome": "Snipping Tool",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["Microsoft.ScreenSketch"],
-      "capability_selectors": ["Microsoft.Windows.SnippingTool"],
-      "feature_selectors": ["Microsoft-SnippingTool"]
-    },
-    {
-      "id": "sticky_notes",
-      "nome": "Sticky Notes",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": false,
-      "appx_selectors": ["Microsoft.MicrosoftStickyNotes"]
+      "appx_selectors": [
+        "Microsoft.OutlookForWindows"
+      ],
+      "registry_delete_paths": [
+        "Registry::HKLM\\Software\\Microsoft\\WindowsUpdate\\Orchestrator\\UScheduler_Oobe\\OutlookUpdate"
+      ]
     },
     {
       "id": "teams",
@@ -344,7 +76,426 @@
       "tipo": "appx",
       "risco": "destrutivo",
       "recomendado": false,
-      "appx_selectors": ["MicrosoftTeams", "MSTeams"]
+      "appx_selectors": [
+        "MicrosoftTeams",
+        "MSTeams"
+      ]
+    },
+    {
+      "id": "skype",
+      "nome": "Skype",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.SkypeApp"
+      ]
+    },
+    {
+      "id": "people",
+      "nome": "People",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.People"
+      ]
+    },
+    {
+      "id": "family",
+      "nome": "Family",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "appx_selectors": [
+        "MicrosoftCorporationII.MicrosoftFamily"
+      ]
+    },
+    {
+      "id": "phone_link",
+      "nome": "Your Phone / Phone Link",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "appx_selectors": [
+        "Microsoft.YourPhone"
+      ]
+    },
+    {
+      "id": "messaging",
+      "nome": "Messaging",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.Messaging"
+      ]
+    },
+    {
+      "id": "comms_phone",
+      "nome": "Comms Phone",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.CommsPhone"
+      ]
+    },
+    {
+      "id": "windows_phone",
+      "nome": "Windows Phone",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.WindowsPhone"
+      ]
+    }
+  ],
+  "Midia, Foto e Criacao": [
+    {
+      "id": "camera",
+      "nome": "Camera",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.WindowsCamera"
+      ]
+    },
+    {
+      "id": "photos",
+      "nome": "Photos",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "appx_selectors": [
+        "Microsoft.Windows.Photos"
+      ]
+    },
+    {
+      "id": "clipchamp",
+      "nome": "Clipchamp",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "appx_selectors": [
+        "Clipchamp.Clipchamp"
+      ]
+    },
+    {
+      "id": "movies_tv",
+      "nome": "Movies & TV",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.ZuneVideo"
+      ]
+    },
+    {
+      "id": "voice_recorder",
+      "nome": "Voice Recorder",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.WindowsSoundRecorder"
+      ]
+    },
+    {
+      "id": "windows_media_player_modern",
+      "nome": "Windows Media Player (modern)",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.ZuneMusic"
+      ]
+    },
+    {
+      "id": "windows_media_player_classic",
+      "nome": "Windows Media Player (classic)",
+      "tipo": "capability",
+      "risco": "requer_reinicio",
+      "recomendado": false,
+      "capability_selectors": [
+        "Media.WindowsMediaPlayer"
+      ]
+    },
+    {
+      "id": "paint",
+      "nome": "Paint",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "appx_selectors": [
+        "Microsoft.Paint"
+      ],
+      "capability_selectors": [
+        "Microsoft.Windows.MSPaint"
+      ]
+    },
+    {
+      "id": "paint_3d",
+      "nome": "Paint 3D",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "appx_selectors": [
+        "Microsoft.MSPaint"
+      ]
+    },
+    {
+      "id": "3d_viewer",
+      "nome": "3D Viewer",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.Microsoft3DViewer"
+      ]
+    },
+    {
+      "id": "3d_builder",
+      "nome": "3D Builder",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.3dBuilder"
+      ]
+    },
+    {
+      "id": "print_3d",
+      "nome": "Print 3D",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.Print3D"
+      ]
+    },
+    {
+      "id": "mixed_reality",
+      "nome": "Mixed Reality",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.MixedReality.Portal"
+      ]
+    },
+    {
+      "id": "snipping_tool",
+      "nome": "Snipping Tool",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "appx_selectors": [
+        "Microsoft.ScreenSketch"
+      ],
+      "capability_selectors": [
+        "Microsoft.Windows.SnippingTool"
+      ],
+      "feature_selectors": [
+        "Microsoft-SnippingTool"
+      ]
+    }
+  ],
+  "Noticias, Busca e Conteudo": [
+    {
+      "id": "bing_search",
+      "nome": "Bing Search",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "appx_selectors": [
+        "Microsoft.BingSearch"
+      ]
+    },
+    {
+      "id": "news",
+      "nome": "News",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.BingNews"
+      ]
+    },
+    {
+      "id": "weather",
+      "nome": "Weather",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.BingWeather"
+      ]
+    },
+    {
+      "id": "widgets_news",
+      "nome": "Widgets / Noticias",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.WidgetsPlatformRuntime",
+        "MicrosoftWindows.Client.WebExperience"
+      ]
+    },
+    {
+      "id": "tips",
+      "nome": "Tips",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.Getstarted"
+      ]
+    },
+    {
+      "id": "get_help",
+      "nome": "Get Help",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.GetHelp"
+      ]
+    },
+    {
+      "id": "feedback_hub",
+      "nome": "Feedback Hub",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.WindowsFeedbackHub"
+      ]
+    },
+    {
+      "id": "bing_finance",
+      "nome": "Bing Finance",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.BingFinance"
+      ]
+    },
+    {
+      "id": "bing_sports",
+      "nome": "Bing Sports",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.BingSports"
+      ]
+    },
+    {
+      "id": "sway",
+      "nome": "Sway",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.Sway"
+      ]
+    },
+    {
+      "id": "maps",
+      "nome": "Maps",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.WindowsMaps"
+      ]
+    }
+  ],
+  "Produtividade e Escritorio": [
+    {
+      "id": "calculator",
+      "nome": "Calculator",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "appx_selectors": [
+        "Microsoft.WindowsCalculator"
+      ]
+    },
+    {
+      "id": "clock",
+      "nome": "Clock",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.WindowsAlarms"
+      ]
+    },
+    {
+      "id": "notepad_modern",
+      "nome": "Notepad (modern)",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "appx_selectors": [
+        "Microsoft.WindowsNotepad"
+      ]
+    },
+    {
+      "id": "onenote",
+      "nome": "OneNote",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "appx_selectors": [
+        "Microsoft.Office.OneNote"
+      ]
+    },
+    {
+      "id": "office_hub",
+      "nome": "Office 365",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.MicrosoftOfficeHub"
+      ]
+    },
+    {
+      "id": "to_do",
+      "nome": "To Do",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.Todos"
+      ]
+    },
+    {
+      "id": "sticky_notes",
+      "nome": "Sticky Notes",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "appx_selectors": [
+        "Microsoft.MicrosoftStickyNotes"
+      ]
+    },
+    {
+      "id": "power_automate",
+      "nome": "Power Automate",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "appx_selectors": [
+        "Microsoft.PowerAutomateDesktop"
+      ]
     },
     {
       "id": "wallet",
@@ -352,15 +503,31 @@
       "tipo": "appx",
       "risco": "destrutivo",
       "recomendado": false,
-      "appx_selectors": ["Microsoft.Wallet"]
+      "appx_selectors": [
+        "Microsoft.Wallet"
+      ]
+    }
+  ],
+  "Jogos e Xbox": [
+    {
+      "id": "solitaire",
+      "nome": "Solitaire Collection",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": [
+        "Microsoft.MicrosoftSolitaireCollection"
+      ]
     },
     {
-      "id": "windows_terminal",
-      "nome": "Windows Terminal",
+      "id": "game_assist",
+      "nome": "Game Assist",
       "tipo": "appx",
       "risco": "destrutivo",
       "recomendado": false,
-      "appx_selectors": ["Microsoft.WindowsTerminal"]
+      "appx_selectors": [
+        "Microsoft.Edge.GameAssist"
+      ]
     },
     {
       "id": "xbox_apps",
@@ -377,64 +544,31 @@
         "Microsoft.XboxSpeechToTextOverlay",
         "Microsoft.GamingApp"
       ]
-    },
+    }
+  ],
+  "Desenvolvimento e Suporte Remoto": [
     {
-      "id": "phone_link",
-      "nome": "Your Phone / Phone Link",
+      "id": "dev_home",
+      "nome": "Dev Home",
       "tipo": "appx",
       "risco": "destrutivo",
       "recomendado": false,
-      "appx_selectors": ["Microsoft.YourPhone"]
-    }
-  ],
-  "Recursos do Sistema": [
-    {
-      "id": "windows_hello_face",
-      "nome": "Facial recognition (Windows Hello)",
-      "tipo": "capability",
-      "risco": "requer_reinicio",
-      "recomendado": false,
-      "capability_selectors": ["Hello.Face.18967", "Hello.Face.Migration.18967", "Hello.Face.20134"]
+      "appx_selectors": [
+        "Microsoft.Windows.DevHome"
+      ],
+      "registry_delete_paths": [
+        "Registry::HKLM\\Software\\Microsoft\\WindowsUpdate\\Orchestrator\\UScheduler_Oobe\\DevHomeUpdate"
+      ]
     },
     {
-      "id": "handwriting",
-      "nome": "Handwriting (all languages)",
-      "tipo": "capability",
-      "risco": "requer_reinicio",
+      "id": "windows_terminal",
+      "nome": "Windows Terminal",
+      "tipo": "appx",
+      "risco": "destrutivo",
       "recomendado": false,
-      "capability_selectors": ["Language.Handwriting"]
-    },
-    {
-      "id": "internet_explorer",
-      "nome": "Internet Explorer",
-      "tipo": "capability",
-      "risco": "requer_reinicio",
-      "recomendado": false,
-      "capability_selectors": ["Browser.InternetExplorer"]
-    },
-    {
-      "id": "math_input_panel",
-      "nome": "Math Input Panel",
-      "tipo": "capability",
-      "risco": "requer_reinicio",
-      "recomendado": false,
-      "capability_selectors": ["MathRecognizer"]
-    },
-    {
-      "id": "media_features",
-      "nome": "Media Features",
-      "tipo": "feature",
-      "risco": "requer_reinicio",
-      "recomendado": false,
-      "feature_selectors": ["MediaPlayback"]
-    },
-    {
-      "id": "onesync",
-      "nome": "OneSync",
-      "tipo": "capability",
-      "risco": "requer_reinicio",
-      "recomendado": false,
-      "capability_selectors": ["OneCoreUAP.OneSync"]
+      "appx_selectors": [
+        "Microsoft.WindowsTerminal"
+      ]
     },
     {
       "id": "openssh_client",
@@ -442,7 +576,9 @@
       "tipo": "capability",
       "risco": "requer_reinicio",
       "recomendado": false,
-      "capability_selectors": ["OpenSSH.Client"]
+      "capability_selectors": [
+        "OpenSSH.Client"
+      ]
     },
     {
       "id": "powershell_2",
@@ -450,7 +586,9 @@
       "tipo": "feature",
       "risco": "requer_reinicio",
       "recomendado": false,
-      "feature_selectors": ["MicrosoftWindowsPowerShellV2Root"]
+      "feature_selectors": [
+        "MicrosoftWindowsPowerShellV2Root"
+      ]
     },
     {
       "id": "powershell_ise",
@@ -458,7 +596,9 @@
       "tipo": "capability",
       "risco": "requer_reinicio",
       "recomendado": false,
-      "capability_selectors": ["Microsoft.Windows.PowerShell.ISE"]
+      "capability_selectors": [
+        "Microsoft.Windows.PowerShell.ISE"
+      ]
     },
     {
       "id": "remote_desktop_client",
@@ -466,7 +606,46 @@
       "tipo": "feature",
       "risco": "requer_reinicio",
       "recomendado": false,
-      "feature_selectors": ["Microsoft-RemoteDesktopConnection"]
+      "feature_selectors": [
+        "Microsoft-RemoteDesktopConnection"
+      ]
+    },
+    {
+      "id": "quick_assist",
+      "nome": "Quick Assist",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "appx_selectors": [
+        "MicrosoftCorporationII.QuickAssist"
+      ],
+      "capability_selectors": [
+        "App.Support.QuickAssist"
+      ]
+    }
+  ],
+  "Recursos de Entrada e Idioma": [
+    {
+      "id": "windows_hello_face",
+      "nome": "Facial recognition (Windows Hello)",
+      "tipo": "capability",
+      "risco": "requer_reinicio",
+      "recomendado": false,
+      "capability_selectors": [
+        "Hello.Face.18967",
+        "Hello.Face.Migration.18967",
+        "Hello.Face.20134"
+      ]
+    },
+    {
+      "id": "handwriting",
+      "nome": "Handwriting (all languages)",
+      "tipo": "capability",
+      "risco": "requer_reinicio",
+      "recomendado": false,
+      "capability_selectors": [
+        "Language.Handwriting"
+      ]
     },
     {
       "id": "speech",
@@ -474,15 +653,42 @@
       "tipo": "capability",
       "risco": "requer_reinicio",
       "recomendado": false,
-      "capability_selectors": ["Language.Speech", "Language.TextToSpeech"]
+      "capability_selectors": [
+        "Language.Speech",
+        "Language.TextToSpeech"
+      ]
     },
     {
-      "id": "steps_recorder",
-      "nome": "Steps Recorder",
+      "id": "math_input_panel",
+      "nome": "Math Input Panel",
       "tipo": "capability",
       "risco": "requer_reinicio",
       "recomendado": false,
-      "capability_selectors": ["App.StepsRecorder"]
+      "capability_selectors": [
+        "MathRecognizer"
+      ]
+    }
+  ],
+  "Componentes Legados do Windows": [
+    {
+      "id": "internet_explorer",
+      "nome": "Internet Explorer",
+      "tipo": "capability",
+      "risco": "requer_reinicio",
+      "recomendado": false,
+      "capability_selectors": [
+        "Browser.InternetExplorer"
+      ]
+    },
+    {
+      "id": "media_features",
+      "nome": "Media Features",
+      "tipo": "feature",
+      "risco": "requer_reinicio",
+      "recomendado": false,
+      "feature_selectors": [
+        "MediaPlayback"
+      ]
     },
     {
       "id": "fax_scan",
@@ -490,15 +696,19 @@
       "tipo": "capability",
       "risco": "requer_reinicio",
       "recomendado": false,
-      "capability_selectors": ["Print.Fax.Scan"]
+      "capability_selectors": [
+        "Print.Fax.Scan"
+      ]
     },
     {
-      "id": "windows_media_player_classic",
-      "nome": "Windows Media Player (classic)",
+      "id": "steps_recorder",
+      "nome": "Steps Recorder",
       "tipo": "capability",
       "risco": "requer_reinicio",
       "recomendado": false,
-      "capability_selectors": ["Media.WindowsMediaPlayer"]
+      "capability_selectors": [
+        "App.StepsRecorder"
+      ]
     },
     {
       "id": "wordpad",
@@ -506,17 +716,19 @@
       "tipo": "capability",
       "risco": "requer_reinicio",
       "recomendado": false,
-      "capability_selectors": ["Microsoft.Windows.WordPad"]
-    }
-  ],
-  "Extras do Debloat Atual": [
+      "capability_selectors": [
+        "Microsoft.Windows.WordPad"
+      ]
+    },
     {
-      "id": "messaging",
-      "nome": "Messaging",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.Messaging"]
+      "id": "onesync",
+      "nome": "OneSync",
+      "tipo": "capability",
+      "risco": "requer_reinicio",
+      "recomendado": false,
+      "capability_selectors": [
+        "OneCoreUAP.OneSync"
+      ]
     },
     {
       "id": "one_connect",
@@ -524,63 +736,22 @@
       "tipo": "appx",
       "risco": "destrutivo",
       "recomendado": true,
-      "appx_selectors": ["Microsoft.OneConnect"]
-    },
+      "appx_selectors": [
+        "Microsoft.OneConnect"
+      ]
+    }
+  ],
+  "Loja e Plataforma": [
     {
-      "id": "print_3d",
-      "nome": "Print 3D",
+      "id": "microsoft_store",
+      "nome": "Microsoft Store",
       "tipo": "appx",
       "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.Print3D"]
-    },
-    {
-      "id": "3d_builder",
-      "nome": "3D Builder",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.3dBuilder"]
-    },
-    {
-      "id": "bing_finance",
-      "nome": "Bing Finance",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.BingFinance"]
-    },
-    {
-      "id": "bing_sports",
-      "nome": "Bing Sports",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.BingSports"]
-    },
-    {
-      "id": "comms_phone",
-      "nome": "Comms Phone",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.CommsPhone"]
-    },
-    {
-      "id": "sway",
-      "nome": "Sway",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.Sway"]
-    },
-    {
-      "id": "windows_phone",
-      "nome": "Windows Phone",
-      "tipo": "appx",
-      "risco": "destrutivo",
-      "recomendado": true,
-      "appx_selectors": ["Microsoft.WindowsPhone"]
+      "recomendado": false,
+      "appx_selectors": [
+        "Microsoft.WindowsStore",
+        "Microsoft.StorePurchaseApp"
+      ]
     }
   ]
 }
