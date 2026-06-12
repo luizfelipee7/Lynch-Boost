@@ -79,6 +79,23 @@ def test_all_config_actions_have_valid_risk_classification():
     assert set(riscos.RISCOS_ACOES.values()) == riscos.RISCOS_VALIDOS
 
 
+def test_service_and_privacy_tweaks_live_under_network_latency_category():
+    data = json.loads((PROJECT_ROOT / "config.json").read_text(encoding="utf-8"))
+    moved_names = {
+        "Desativar Telemetria e Rastreadores",
+        "Desativar Manutenção em Segundo Plano",
+        "Otimizar Políticas de Grupo (GPO)",
+        "Otimizar Serviços do Windows",
+        "Desativar Sincronizacao de Configuracoes",
+        "Desativar Experimentos do Windows",
+    }
+    network_names = {item["nome"] for item in data["rede_latencia"]}
+    uninstall_names = {item["nome"] for item in data["debloat_servicos"]}
+
+    assert moved_names <= network_names
+    assert moved_names & uninstall_names == set()
+
+
 def test_registered_script_actions_expose_risk_metadata():
     acoes_script = load_python_module("acoes_script_risk_test", "core/acoes_script.py")
     riscos = load_python_module("riscos_script_test", "core/riscos.py")

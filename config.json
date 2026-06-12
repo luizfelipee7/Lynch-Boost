@@ -68,26 +68,6 @@
   ],
   "debloat_servicos": [
     {
-      "nome": "Desativar Telemetria e Rastreadores",
-      "destrutivo": true,
-      "acao_especial": "executar_desativar_telemetria_e_rastreadores"
-    },
-    {
-      "nome": "Desativar Manutenção em Segundo Plano",
-      "destrutivo": true,
-      "acao_especial": "executar_desativar_manutencao_em_segundo_plano"
-    },
-    {
-      "nome": "Otimizar Políticas de Grupo (GPO)",
-      "destrutivo": true,
-      "acao_especial": "executar_otimizar_politicas_de_grupo_gpo"
-    },
-    {
-      "nome": "Otimizar Serviços do Windows",
-      "destrutivo": true,
-      "acao_especial": "executar_otimizar_servicos_do_windows"
-    },
-    {
       "nome": "Debloat do Windows 11 Moderno",
       "destrutivo": true,
       "acao_especial": "executar_debloat_do_windows_11_moderno"
@@ -96,16 +76,6 @@
       "nome": "OneDrive",
       "destrutivo": true,
       "acao_especial": "executar_onedrive"
-    },
-    {
-      "nome": "Desativar Sincronizacao de Configuracoes",
-      "acao_especial": "abrir_modal_desativar_sincronizacao",
-      "destrutivo": false
-    },
-    {
-      "nome": "Desativar Experimentos do Windows",
-      "acao_especial": "abrir_modal_desativar_experimentos",
-      "destrutivo": false
     },
     {
       "nome": "Desinstalar somente Xbox Game Bar",
@@ -243,6 +213,36 @@
       "nome": "Redefinir Configurações de Rede",
       "destrutivo": true,
       "acao_especial": "executar_redefinir_configuracoes_de_rede"
+    },
+    {
+      "nome": "Desativar Telemetria e Rastreadores",
+      "destrutivo": true,
+      "acao_especial": "executar_desativar_telemetria_e_rastreadores"
+    },
+    {
+      "nome": "Desativar Manutenção em Segundo Plano",
+      "destrutivo": true,
+      "acao_especial": "executar_desativar_manutencao_em_segundo_plano"
+    },
+    {
+      "nome": "Otimizar Políticas de Grupo (GPO)",
+      "destrutivo": true,
+      "acao_especial": "executar_otimizar_politicas_de_grupo_gpo"
+    },
+    {
+      "nome": "Otimizar Serviços do Windows",
+      "destrutivo": true,
+      "acao_especial": "executar_otimizar_servicos_do_windows"
+    },
+    {
+      "nome": "Desativar Sincronizacao de Configuracoes",
+      "acao_especial": "abrir_modal_desativar_sincronizacao",
+      "destrutivo": false
+    },
+    {
+      "nome": "Desativar Experimentos do Windows",
+      "acao_especial": "abrir_modal_desativar_experimentos",
+      "destrutivo": false
     },
     {
       "nome": "Ajustes de Latência e CPU AMD",
