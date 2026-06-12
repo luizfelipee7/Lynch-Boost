@@ -70,7 +70,7 @@
     {
       "nome": "Debloat do Windows 11 Moderno",
       "destrutivo": true,
-      "acao_especial": "executar_debloat_do_windows_11_moderno"
+      "acao_especial": "abrir_menu_desinstalar_apps_windows"
     },
     {
       "nome": "OneDrive",

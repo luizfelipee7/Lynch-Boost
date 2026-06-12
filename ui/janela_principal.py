@@ -941,6 +941,9 @@ class PCBoosterHub(ctk.CTk):
         if especial == "abrir_menu_instalacao":
             self.abrir_menu_instalacao(btn_instance, categoria, item_id)
             return
+        if especial == "abrir_menu_desinstalar_apps_windows":
+            self.abrir_menu_desinstalar_apps_windows(btn_instance, categoria, item_id)
+            return
         if especial == "abrir_menu_otimizacao":
             self.abrir_menu_otimizacao(btn_instance, categoria, item_id)
             return
@@ -1147,6 +1150,24 @@ class PCBoosterHub(ctk.CTk):
         self.log_mensagem("Abrindo interface do Instalador de Programas...")
         self.abrir_categoria("instalacao")
 
+    def abrir_menu_desinstalar_apps_windows(self, parent_btn=None, categoria=None, item_id=None):
+        self.log_mensagem("Abrindo interface do Desinstalador de Apps do Windows...")
+        self._esconder_tudo()
+        if not hasattr(self, "desinstalar_apps_windows_frame"):
+            from ui.menu_desinstalar_apps_windows import MenuDesinstalarAppsWindows
+            self.desinstalar_apps_windows_frame = MenuDesinstalarAppsWindows(
+                self,
+                log_callback=self.log_mensagem,
+                back_callback=lambda: self.abrir_categoria("debloat_servicos"),
+            )
+            self.desinstalar_apps_windows_frame.grid(row=0, column=0, sticky="nsew")
+        else:
+            self.desinstalar_apps_windows_frame.grid(row=0, column=0, sticky="nsew")
+
+        self.grid_rowconfigure(0, weight=8)
+        self.grid_rowconfigure(1, weight=1)
+        self.console_frame.grid(row=1, column=0, sticky="nsew", padx=10, pady=(0, 10))
+
     def abrir_menu_otimizacao(self, parent_btn=None, categoria=None, item_id=None):
         self.log_mensagem("Iniciando interface de Otimização de Registro...")
         from ui.menu_otimizacao import MenuOtimizacaoReg
@@ -1272,6 +1293,8 @@ class PCBoosterHub(ctk.CTk):
             self.audio_frame.grid_forget()
         if hasattr(self, "personalizacao_frame"):
             self.personalizacao_frame.grid_forget()
+        if hasattr(self, "desinstalar_apps_windows_frame"):
+            self.desinstalar_apps_windows_frame.grid_forget()
 
     # ============================================================
     # LOG E UTILITÁRIOS

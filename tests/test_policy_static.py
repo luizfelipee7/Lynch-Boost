@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+import json
 import re
 
 from conftest import PROJECT_ROOT
@@ -129,6 +130,37 @@ def test_visual_performance_script_preserves_font_smoothing():
     missing = [setting for setting in required_settings if setting not in text]
 
     assert missing == []
+
+
+def test_windows_app_removal_catalog_and_executor_are_wired_safely():
+    catalog_path = PROJECT_ROOT / "dados" / "apps_windows_remocao.json"
+    executor_path = PROJECT_ROOT / "scripts" / "windows_tweaks" / "script_remover_apps_windows.ps1"
+    menu_path = PROJECT_ROOT / "ui" / "menu_desinstalar_apps_windows.py"
+    config_path = PROJECT_ROOT / "config.json"
+
+    assert catalog_path.exists()
+    assert executor_path.exists()
+    assert menu_path.exists()
+
+    catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+    items = [item for group in catalog.values() for item in group]
+    ids = [item["id"] for item in items]
+
+    assert len(ids) == len(set(ids))
+    assert {"copilot", "recall", "onedrive", "xbox_game_bar", "microsoft_edge"} <= set(ids)
+
+    for item in items:
+        assert item["tipo"] in {"appx", "feature", "especial"}
+        if item["tipo"] == "especial":
+            assert (PROJECT_ROOT / item["arquivo"]).exists()
+
+    executor_text = executor_path.read_text(encoding="utf-8", errors="replace")
+    assert "Remove-AppxProvisionedPackage -AllUsers -Online" in executor_text
+    assert "Remove-AppxPackage -AllUsers" in executor_text
+
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    debloat = next(item for item in config["debloat_servicos"] if item["nome"] == "Debloat do Windows 11 Moderno")
+    assert debloat["acao_especial"] == "abrir_menu_desinstalar_apps_windows"
 
 
 def test_project_owned_files_do_not_expose_local_user_paths():

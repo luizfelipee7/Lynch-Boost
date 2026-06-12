@@ -33,7 +33,7 @@ RISCOS_ACOES = {
     "executar_desativar_manutencao_em_segundo_plano": RISCO_REVERSIVEL,
     "executar_otimizar_politicas_de_grupo_gpo": RISCO_REVERSIVEL,
     "executar_otimizar_servicos_do_windows": RISCO_REVERSIVEL,
-    "executar_debloat_do_windows_11_moderno": RISCO_DESTRUTIVO,
+    "abrir_menu_desinstalar_apps_windows": RISCO_DESTRUTIVO,
     "executar_onedrive": RISCO_DESTRUTIVO,
     "abrir_modal_desativar_sincronizacao": RISCO_REVERSIVEL,
     "abrir_modal_desativar_experimentos": RISCO_REVERSIVEL,

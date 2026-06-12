@@ -1,0 +1,299 @@
+{
+  "Recomendado Lynch": [
+    {
+      "id": "copilot",
+      "nome": "Copilot",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.Copilot", "Microsoft.Windows.Ai.Copilot.Provider"],
+      "appx_patterns": ["*Copilot*"],
+      "registry_values": [
+        {
+          "path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot",
+          "name": "TurnOffWindowsCopilot",
+          "type": "DWord",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "recall",
+      "nome": "Recall",
+      "tipo": "feature",
+      "risco": "requer_reinicio",
+      "recomendado": true,
+      "feature_selectors": ["Recall"],
+      "services_to_disable": ["WSAIFabricSvc"]
+    },
+    {
+      "id": "widgets_news",
+      "nome": "Widgets / Noticias",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.WidgetsPlatformRuntime", "MicrosoftWindows.Client.WebExperience"]
+    },
+    {
+      "id": "cortana",
+      "nome": "Cortana",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.549981C3F5F10"]
+    },
+    {
+      "id": "bing_news",
+      "nome": "News",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.BingNews"]
+    },
+    {
+      "id": "weather",
+      "nome": "Weather",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.BingWeather"]
+    },
+    {
+      "id": "tips",
+      "nome": "Tips",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.Getstarted"]
+    },
+    {
+      "id": "get_help",
+      "nome": "Get Help",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.GetHelp"]
+    },
+    {
+      "id": "3d_viewer",
+      "nome": "3D Viewer",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.Microsoft3DViewer"]
+    },
+    {
+      "id": "solitaire",
+      "nome": "Solitaire Collection",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.MicrosoftSolitaireCollection"]
+    },
+    {
+      "id": "mixed_reality",
+      "nome": "Mixed Reality",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.MixedReality.Portal"]
+    },
+    {
+      "id": "people",
+      "nome": "People",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.People"]
+    },
+    {
+      "id": "skype",
+      "nome": "Skype",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.SkypeApp"]
+    },
+    {
+      "id": "clock",
+      "nome": "Clock",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.WindowsAlarms"]
+    },
+    {
+      "id": "camera",
+      "nome": "Camera",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.WindowsCamera"]
+    },
+    {
+      "id": "mail_calendar",
+      "nome": "Mail and Calendar",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["microsoft.windowscommunicationsapps"]
+    },
+    {
+      "id": "feedback_hub",
+      "nome": "Feedback Hub",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.WindowsFeedbackHub"]
+    },
+    {
+      "id": "maps",
+      "nome": "Maps",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.WindowsMaps"]
+    },
+    {
+      "id": "voice_recorder",
+      "nome": "Voice Recorder",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.WindowsSoundRecorder"]
+    },
+    {
+      "id": "movies_tv",
+      "nome": "Movies & TV",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.ZuneVideo"]
+    },
+    {
+      "id": "media_player_modern",
+      "nome": "Windows Media Player (modern)",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.ZuneMusic"]
+    },
+    {
+      "id": "to_do",
+      "nome": "To Do",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.Todos"]
+    },
+    {
+      "id": "office_hub",
+      "nome": "Office 365",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.MicrosoftOfficeHub"]
+    }
+  ],
+  "Componentes Extras do Debloat Atual": [
+    {
+      "id": "messaging",
+      "nome": "Messaging",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.Messaging"]
+    },
+    {
+      "id": "one_connect",
+      "nome": "OneConnect",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.OneConnect"]
+    },
+    {
+      "id": "print_3d",
+      "nome": "Print 3D",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.Print3D"]
+    },
+    {
+      "id": "3d_builder",
+      "nome": "3D Builder",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.3dBuilder"]
+    },
+    {
+      "id": "bing_finance",
+      "nome": "Bing Finance",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.BingFinance"]
+    },
+    {
+      "id": "bing_sports",
+      "nome": "Bing Sports",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.BingSports"]
+    },
+    {
+      "id": "comms_phone",
+      "nome": "Comms Phone",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.CommsPhone"]
+    },
+    {
+      "id": "sway",
+      "nome": "Sway",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.Sway"]
+    },
+    {
+      "id": "windows_phone",
+      "nome": "Windows Phone",
+      "tipo": "appx",
+      "risco": "destrutivo",
+      "recomendado": true,
+      "appx_selectors": ["Microsoft.WindowsPhone"]
+    }
+  ],
+  "Especiais": [
+    {
+      "id": "onedrive",
+      "nome": "OneDrive",
+      "tipo": "especial",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "arquivo": "scripts/windows_tweaks/script_remover_onedrive.ps1"
+    },
+    {
+      "id": "xbox_game_bar",
+      "nome": "Xbox Game Bar",
+      "tipo": "especial",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "arquivo": "scripts/windows_tweaks/script_remover_game_bar.bat"
+    },
+    {
+      "id": "microsoft_edge",
+      "nome": "Microsoft Edge",
+      "tipo": "especial",
+      "risco": "destrutivo",
+      "recomendado": false,
+      "arquivo": "scripts/windows_tweaks/script_remover_edge.ps1",
+      "argumentos": ["-UninstallEdge", "-RemoveEdgeData", "-NonInteractive"]
+    }
+  ]
+}
