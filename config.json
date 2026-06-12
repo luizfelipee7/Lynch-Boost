@@ -68,7 +68,7 @@
   ],
   "debloat_servicos": [
     {
-      "nome": "Debloat do Windows 11 Moderno",
+      "nome": "Desinstalar Windows Apps",
       "destrutivo": true,
       "acao_especial": "abrir_menu_desinstalar_apps_windows"
     },

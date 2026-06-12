@@ -147,19 +147,36 @@ def test_windows_app_removal_catalog_and_executor_are_wired_safely():
     ids = [item["id"] for item in items]
 
     assert len(ids) == len(set(ids))
-    assert {"copilot", "recall", "onedrive", "xbox_game_bar", "microsoft_edge"} <= set(ids)
+    required_ids = {
+        "3d_viewer",
+        "bing_search",
+        "calculator",
+        "clipchamp",
+        "copilot",
+        "internet_explorer",
+        "microsoft_store",
+        "recall",
+        "snipping_tool",
+        "windows_terminal",
+        "xbox_apps",
+        "phone_link",
+    }
+    external_specials = {"onedrive", "microsoft_edge", "xbox_game_bar"}
+    assert required_ids <= set(ids)
+    assert external_specials.isdisjoint(set(ids))
 
     for item in items:
-        assert item["tipo"] in {"appx", "feature", "especial"}
-        if item["tipo"] == "especial":
-            assert (PROJECT_ROOT / item["arquivo"]).exists()
+        assert item["tipo"] in {"appx", "feature", "capability"}
+        assert "arquivo" not in item
 
     executor_text = executor_path.read_text(encoding="utf-8", errors="replace")
     assert "Remove-AppxProvisionedPackage -AllUsers -Online" in executor_text
     assert "Remove-AppxPackage -AllUsers" in executor_text
+    assert "Remove-WindowsCapability -Online" in executor_text
+    assert "Disable-WindowsOptionalFeature -Online -Remove" in executor_text
 
     config = json.loads(config_path.read_text(encoding="utf-8"))
-    debloat = next(item for item in config["debloat_servicos"] if item["nome"] == "Debloat do Windows 11 Moderno")
+    debloat = next(item for item in config["debloat_servicos"] if item["nome"] == "Desinstalar Windows Apps")
     assert debloat["acao_especial"] == "abrir_menu_desinstalar_apps_windows"
 
 

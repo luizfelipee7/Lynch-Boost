@@ -25,7 +25,7 @@ CATEGORIAS = [
     {"key": "mouse_teclado",        "emoji": "🔌", "titulo": "Dispositivos",    "subtitulo": "Mouse, Teclado e Som"},
     {"key": "benchmark_info",       "emoji": "📊", "titulo": "Especificações",  "subtitulo": "Hardware e Diagnóstico"},
     {"key": "instalacao",           "emoji": "📦", "titulo": "Instalar",        "subtitulo": "Instale apps úteis"},
-    {"key": "debloat_servicos",     "emoji": "🛡️", "titulo": "Desinstalar",     "subtitulo": "Remover lixo e telemetria"},
+    {"key": "debloat_servicos",     "emoji": "🛡️", "titulo": "Desinstalar",     "subtitulo": "Remover apps e componentes"},
 ]
 
 TEMAS_CATEGORIAS = {
@@ -58,7 +58,7 @@ GRUPOS_DETALHE = {
     ],
     "debloat_servicos": [
         {"titulo": "Remoção de Aplicativos", "emoji": "🛡️",
-         "scripts": ["Debloat do Windows 11 Moderno", "OneDrive", "Microsoft Edge",
+         "scripts": ["Desinstalar Windows Apps", "OneDrive", "Microsoft Edge",
                      "Desinstalar somente Xbox Game Bar"],
          "atalhos": []},
         {"titulo": "Utilitários Nativos",    "emoji": "🔗",

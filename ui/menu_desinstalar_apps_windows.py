@@ -1,6 +1,7 @@
 import json
 import os
 import threading
+from tkinter import filedialog
 
 import customtkinter as ctk
 
@@ -45,10 +46,30 @@ class MenuDesinstalarAppsWindows(ctk.CTkFrame):
 
         ctk.CTkLabel(
             header,
-            text="Desinstalador de Apps do Windows",
+            text="Desinstalar Windows Apps",
             font=ctk.CTkFont(size=22, weight="bold"),
             text_color="white",
         ).pack(side="left", padx=(15, 0))
+
+        ctk.CTkButton(
+            header,
+            text="Exportar JSON",
+            width=125,
+            height=32,
+            fg_color="#1F4E79",
+            hover_color="#296296",
+            command=self.exportar_perfil,
+        ).pack(side="right", padx=(5, 0))
+
+        ctk.CTkButton(
+            header,
+            text="Importar JSON",
+            width=125,
+            height=32,
+            fg_color="#1F4E79",
+            hover_color="#296296",
+            command=self.importar_perfil,
+        ).pack(side="right", padx=5)
 
         ctk.CTkFrame(self, height=1, fg_color="#333333").pack(
             fill="x", padx=20, pady=(10, 5)
@@ -239,13 +260,9 @@ class MenuDesinstalarAppsWindows(ctk.CTkFrame):
             wrap = ctk.CTkFrame(apps_container, fg_color="transparent")
             wrap.grid(row=row, column=col, sticky="w", pady=3, padx=2)
 
-            text = app["nome"]
-            if app.get("tipo") == "especial":
-                text = f"{text}  [Especial]"
-
             chk = ctk.CTkCheckBox(
                 wrap,
-                text=text,
+                text=app["nome"],
                 font=ctk.CTkFont(size=12),
                 checkbox_height=18,
                 checkbox_width=18,
@@ -290,6 +307,93 @@ class MenuDesinstalarAppsWindows(ctk.CTkFrame):
         self.selected_apps.clear()
         self._atualizar_contagem()
 
+    def exportar_perfil(self):
+        if not self.selected_apps:
+            self.lbl_status.configure(
+                text="Erro: selecione pelo menos 1 app para exportar.",
+                text_color="#FF0000",
+            )
+            return
+
+        filepath = filedialog.asksaveasfilename(
+            defaultextension=".json",
+            filetypes=[("Perfil Lynch", "*.json"), ("Todos os Arquivos", "*.*")],
+            title="Salvar Perfil de Remocao de Apps",
+        )
+        if not filepath:
+            return
+
+        payload = {
+            "tipo": "lynch_windows_apps_removal_profile",
+            "versao": 1,
+            "apps": sorted(self.selected_apps.keys()),
+        }
+
+        try:
+            with open(filepath, "w", encoding="utf-8") as file:
+                json.dump(payload, file, ensure_ascii=False, indent=2)
+        except OSError as exc:
+            self.lbl_status.configure(
+                text="Erro ao salvar o perfil.",
+                text_color="#FF0000",
+            )
+            self._log(f"Erro ao exportar perfil de remocao: {exc}")
+            return
+
+        self.lbl_status.configure(
+            text=f"Perfil exportado: {os.path.basename(filepath)}",
+            text_color="#4CAF50",
+        )
+
+    def importar_perfil(self):
+        filepath = filedialog.askopenfilename(
+            filetypes=[("Perfil Lynch", "*.json"), ("Todos os Arquivos", "*.*")],
+            title="Carregar Perfil de Remocao de Apps",
+        )
+        if not filepath:
+            return
+
+        try:
+            with open(filepath, "r", encoding="utf-8") as file:
+                payload = json.load(file)
+            if isinstance(payload, dict):
+                app_ids = payload.get("apps", [])
+            else:
+                app_ids = payload
+            if not isinstance(app_ids, list):
+                raise ValueError("Formato invalido")
+        except (OSError, json.JSONDecodeError, ValueError) as exc:
+            self.lbl_status.configure(
+                text="Erro ao carregar o perfil.",
+                text_color="#FF0000",
+            )
+            self._log(f"Erro ao importar perfil de remocao: {exc}")
+            return
+
+        valid_ids = {item["app"]["id"] for item in self.app_checkboxes}
+        imported_ids = {str(app_id) for app_id in app_ids}
+        unknown_ids = sorted(imported_ids - valid_ids)
+
+        self.limpar_selecao()
+        for item in self.app_checkboxes:
+            app = item["app"]
+            if app["id"] in imported_ids:
+                item["widget"].select()
+                self.selected_apps[app["id"]] = app
+
+        self._atualizar_contagem()
+        if unknown_ids:
+            self.lbl_status.configure(
+                text=f"Perfil importado com {len(unknown_ids)} ID(s) ignorado(s).",
+                text_color="#E3B505",
+            )
+            self._log(f"IDs ignorados no perfil de remocao: {', '.join(unknown_ids)}")
+        else:
+            self.lbl_status.configure(
+                text=f"Perfil importado. {len(self.selected_apps)} app(s) selecionado(s).",
+                text_color="#4CAF50",
+            )
+
     def expandir_tudo(self):
         for container in self.category_frames_apps.values():
             container.pack(fill="x", padx=5, pady=(0, 5))
@@ -310,7 +414,7 @@ class MenuDesinstalarAppsWindows(ctk.CTkFrame):
         mensagem = (
             f"Esta acao vai remover {total} item(ns) selecionado(s) do Windows. "
             "Apps comuns serao removidos tambem da lista de provisionamento do sistema. "
-            "Itens especiais executarao seus fluxos proprios. Deseja continuar?"
+            "Recursos do sistema podem exigir reinicializacao para concluir. Deseja continuar?"
         )
 
         modais.abrir_modal_confirmacao(
@@ -331,43 +435,14 @@ class MenuDesinstalarAppsWindows(ctk.CTkFrame):
         threading.Thread(target=self._executar_remocao, args=(selected,), daemon=True).start()
 
     def _executar_remocao(self, selected):
-        normal_apps = [app for app in selected if app.get("tipo") != "especial"]
-        special_apps = [app for app in selected if app.get("tipo") == "especial"]
-        total_steps = (1 if normal_apps else 0) + len(special_apps)
-        completed = 0
-        sucesso_geral = True
-
-        if normal_apps:
-            ids = ",".join(app["id"] for app in normal_apps)
-            self._set_status("Removendo apps padrao do Windows...", "#E3B505")
-            sucesso_geral = runner.executar_arquivo(
-                self.executor_path,
-                self._log,
-                ["-CatalogPath", self.catalog_path, "-Ids", ids],
-            )
-            completed += 1
-            self._set_progress(completed, total_steps)
-            if not sucesso_geral:
-                self._finalizar_remocao(False)
-                return
-
-        for app in special_apps:
-            nome = app["nome"]
-            arquivo = app.get("arquivo")
-            argumentos = app.get("argumentos", [])
-            if not arquivo:
-                self._log(f"[ERRO] Item especial sem arquivo: {nome}")
-                sucesso_geral = False
-                break
-
-            self._set_status(f"Executando fluxo especial: {nome}", "#E3B505")
-            if not runner.executar_arquivo(arquivo, self._log, argumentos):
-                sucesso_geral = False
-                break
-            completed += 1
-            self._set_progress(completed, total_steps)
-
-        self._finalizar_remocao(sucesso_geral)
+        ids = ",".join(app["id"] for app in selected)
+        self._set_status("Removendo apps e recursos selecionados...", "#E3B505")
+        sucesso = runner.executar_arquivo(
+            self.executor_path,
+            self._log,
+            ["-CatalogPath", self.catalog_path, "-Ids", ids],
+        )
+        self._finalizar_remocao(sucesso)
 
     def _finalizar_remocao(self, sucesso):
         if sucesso:

@@ -150,6 +150,44 @@ function Remove-FeatureSelector {
     $feature | Disable-WindowsOptionalFeature -Online -Remove -NoRestart -ErrorAction Continue | Out-Null
 }
 
+function Remove-CapabilitySelector {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Selector
+    )
+
+    $capabilities = Get-WindowsCapability -Online |
+        Where-Object {
+            ($_.Name -split "~")[0] -eq $Selector -and
+            $_.State -notin @("NotPresent", "Removed")
+        }
+
+    if ($null -eq $capabilities) {
+        Write-Status "Capacidade nao ativa: $Selector"
+        return
+    }
+
+    foreach ($capability in $capabilities) {
+        Write-Status "Removendo capacidade: $($capability.Name)"
+        $capability | Remove-WindowsCapability -Online -ErrorAction Continue | Out-Null
+    }
+}
+
+function Remove-RegistryPathIfPresent {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Path
+    )
+
+    if (Test-Path -LiteralPath $Path) {
+        Remove-Item -LiteralPath $Path -Force -Recurse -ErrorAction Continue
+        Write-Status "Registro removido: $Path"
+    }
+    else {
+        Write-Status "Registro nao encontrado: $Path"
+    }
+}
+
 function Invoke-Removal {
     param(
         [Parameter(Mandatory = $true)]
@@ -176,6 +214,12 @@ function Invoke-Removal {
         }
     }
 
+    foreach ($capability in @($Item.capability_selectors)) {
+        if (-not [string]::IsNullOrWhiteSpace([string]$capability)) {
+            Remove-CapabilitySelector -Selector ([string]$capability)
+        }
+    }
+
     foreach ($feature in @($Item.feature_selectors)) {
         if (-not [string]::IsNullOrWhiteSpace([string]$feature)) {
             Remove-FeatureSelector -Selector ([string]$feature)
@@ -191,6 +235,12 @@ function Invoke-Removal {
     foreach ($entry in @($Item.registry_values)) {
         if ($null -ne $entry) {
             Set-RegistryValue -Entry $entry
+        }
+    }
+
+    foreach ($path in @($Item.registry_delete_paths)) {
+        if (-not [string]::IsNullOrWhiteSpace([string]$path)) {
+            Remove-RegistryPathIfPresent -Path ([string]$path)
         }
     }
 }
