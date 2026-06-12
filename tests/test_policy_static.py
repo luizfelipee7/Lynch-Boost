@@ -99,6 +99,38 @@ def test_pyinstaller_spec_uses_admin_manifest_and_excludes_third_party_optimizer
     assert 'Tree("scripts/otimizadores"' not in text
 
 
+def test_edge_modal_exposes_background_reduction_action_supported_by_script():
+    menu = PROJECT_ROOT / "ui" / "menu_edge.py"
+    script = PROJECT_ROOT / "scripts" / "windows_tweaks" / "script_remover_edge.ps1"
+
+    menu_text = menu.read_text(encoding="utf-8", errors="replace")
+    script_text = script.read_text(encoding="utf-8", errors="replace")
+
+    assert "Reduzir Edge em Segundo Plano" in menu_text
+    assert '"-ReduceBackground", "-NonInteractive"' in menu_text
+    assert "[switch]$ReduceBackground" in script_text
+    assert "function ReduceEdgeBackground" in script_text
+    assert "BackgroundModeEnabled" in script_text
+    assert "StartupBoostEnabled" in script_text
+
+
+def test_visual_performance_script_preserves_font_smoothing():
+    script = PROJECT_ROOT / "scripts" / "windows_tweaks" / "script_desempenho_visual.ps1"
+
+    text = script.read_text(encoding="utf-8", errors="replace")
+    required_settings = [
+        'FontSmoothing" -Value "2"',
+        'FontSmoothingType" -Value 2',
+        'FontSmoothingGamma" -Value 1200',
+        'FontSmoothingOrientation" -Value 1',
+        "SPI_SETFONTSMOOTHING",
+    ]
+
+    missing = [setting for setting in required_settings if setting not in text]
+
+    assert missing == []
+
+
 def test_project_owned_files_do_not_expose_local_user_paths():
     offenders = []
     ignored_roots = {

@@ -85,6 +85,12 @@ $RegDesktop = "HKCU:\Control Panel\Desktop"
 $RegVisualEffects = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects"
 $RegDWM = "HKCU:\Software\Microsoft\Windows\DWM"
 
+Write-Host "Preservando suavizacao de fontes e ClearType..."
+Set-ItemProperty -Path $RegDesktop -Name "FontSmoothing" -Value "2" -Type String -Force
+Set-ItemProperty -Path $RegDesktop -Name "FontSmoothingType" -Value 2 -Type DWord -Force
+Set-ItemProperty -Path $RegDesktop -Name "FontSmoothingGamma" -Value 1200 -Type DWord -Force
+Set-ItemProperty -Path $RegDesktop -Name "FontSmoothingOrientation" -Value 1 -Type DWord -Force
+
 # Define Custom (3)
 Set-ItemProperty -Path $RegVisualEffects -Name "VisualFXSetting" -Value 3 -Type DWord -Force
 

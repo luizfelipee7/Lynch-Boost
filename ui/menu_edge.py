@@ -11,7 +11,7 @@ class MenuEdge(ctk.CTkToplevel):
         self.modificou_algo = False
 
         self.title("Lynch Boost - Gerenciador do Edge")
-        self.geometry("450x420") 
+        self.geometry("560x500")
         self.resizable(False, False)
         self.attributes("-topmost", True)
         self.configure(fg_color="#282A36")
@@ -41,6 +41,16 @@ class MenuEdge(ctk.CTkToplevel):
             command=lambda: self.executar_script(["-UninstallEdge", "-RemoveEdgeData", "-NonInteractive"])
         )
         self.btn_desinstalar.pack(pady=10, padx=40, fill="x")
+
+        self.btn_reduzir_background = ctk.CTkButton(
+            self,
+            text="Reduzir Edge em Segundo Plano",
+            fg_color="#1F6AA5",
+            hover_color="#144870",
+            height=40,
+            command=lambda: self.executar_script(["-ReduceBackground", "-NonInteractive"])
+        )
+        self.btn_reduzir_background.pack(pady=10, padx=40, fill="x")
 
         # --- BOTÃO 2: INSTALAR APENAS EDGE ---
         self.btn_instalar_edge = ctk.CTkButton(
@@ -107,6 +117,7 @@ class MenuEdge(ctk.CTkToplevel):
             return
 
         self.btn_desinstalar.configure(state="disabled")
+        self.btn_reduzir_background.configure(state="disabled")
         self.btn_instalar_edge.configure(state="disabled")
         self.btn_instalar_webview.configure(state="disabled")
         self.btn_fechar.configure(state="disabled")
@@ -147,6 +158,7 @@ class MenuEdge(ctk.CTkToplevel):
                 
             finally:
                 self.after(0, lambda: self.btn_desinstalar.configure(state="normal"))
+                self.after(0, lambda: self.btn_reduzir_background.configure(state="normal"))
                 self.after(0, lambda: self.btn_instalar_edge.configure(state="normal"))
                 self.after(0, lambda: self.btn_instalar_webview.configure(state="normal"))
                 self.after(0, lambda: self.btn_fechar.configure(state="normal"))

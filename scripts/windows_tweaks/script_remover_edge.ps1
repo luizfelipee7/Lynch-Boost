@@ -9,6 +9,7 @@ param (
 	[switch]$UninstallEdge,
 	[switch]$InstallEdge,
 	[switch]$InstallWebView,
+	[switch]$ReduceBackground,
 	[switch]$RemoveEdgeData,
 	[switch]$KeepAppX,
 	[switch]$NonInteractive
@@ -24,7 +25,7 @@ $baseKey = 'HKLM:\SOFTWARE' + $(if ([Environment]::Is64BitOperatingSystem) { '\W
 $msedgeExe = "$([Environment]::GetFolderPath('ProgramFilesx86'))\Microsoft\Edge\Application\msedge.exe"
 $edgeUWP = "$windir\SystemApps\Microsoft.MicrosoftEdge_8wekyb3d8bbwe"
 
-if ($NonInteractive -and (!$UninstallEdge -and !$InstallEdge -and !$InstallWebView)) {
+if ($NonInteractive -and (!$UninstallEdge -and !$InstallEdge -and !$InstallWebView -and !$ReduceBackground)) {
 	$NonInteractive = $false
 }
 if ($InstallEdge -and $UninstallEdge) {
@@ -125,6 +126,53 @@ function KillEdgeProcesses {
 		Stop-Process -Id $process -Force
 	}
 	$ErrorActionPreference = 'Continue'	
+}
+
+function Set-DWordValue {
+	param(
+		[Parameter(Mandatory = $true)]
+		[ValidateNotNullOrEmpty()]
+		[string]$Path,
+
+		[Parameter(Mandatory = $true)]
+		[ValidateNotNullOrEmpty()]
+		[string]$Name,
+
+		[Parameter(Mandatory = $true)]
+		[int]$Value
+	)
+
+	if (!(Test-Path -LiteralPath $Path)) {
+		New-Item -Path $Path -Force | Out-Null
+	}
+
+	Set-ItemProperty -Path $Path -Name $Name -Value $Value -Type DWord -Force
+}
+
+function ReduceEdgeBackground {
+	Write-Status 'Applying Edge background reduction policies...'
+
+	$edgePolicyPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Edge'
+	$edgeRecommendedPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Edge\Recommended'
+	$legacyEdgeMainPath = 'HKLM:\SOFTWARE\Policies\Microsoft\MicrosoftEdge\Main'
+	$legacyEdgeTabPreloaderPath = 'HKLM:\SOFTWARE\Policies\Microsoft\MicrosoftEdge\TabPreloader'
+	$edgeUpdatePath = 'HKLM:\SOFTWARE\Policies\Microsoft\EdgeUpdate'
+
+	Set-DWordValue -Path $edgePolicyPath -Name 'BackgroundModeEnabled' -Value 0
+	Set-DWordValue -Path $edgePolicyPath -Name 'StartupBoostEnabled' -Value 0
+	Set-DWordValue -Path $edgePolicyPath -Name 'HubsSidebarEnabled' -Value 0
+	Set-DWordValue -Path $edgePolicyPath -Name 'SpotlightExperiencesAndRecommendationsEnabled' -Value 0
+	Set-DWordValue -Path $edgePolicyPath -Name 'HideFirstRunExperience' -Value 1
+
+	Set-DWordValue -Path $edgeRecommendedPath -Name 'BackgroundModeEnabled' -Value 0
+	Set-DWordValue -Path $edgeRecommendedPath -Name 'StartupBoostEnabled' -Value 0
+
+	Set-DWordValue -Path $legacyEdgeMainPath -Name 'AllowPrelaunch' -Value 0
+	Set-DWordValue -Path $legacyEdgeTabPreloaderPath -Name 'AllowTabPreloading' -Value 0
+	Set-DWordValue -Path $legacyEdgeTabPreloaderPath -Name 'PreventTabPreloading' -Value 1
+	Set-DWordValue -Path $edgeUpdatePath -Name 'RemoveDesktopShortcutDefault' -Value 1
+
+	Write-Status 'Edge background activity reduced by policy.' -Level Success
 }
 
 function RemoveEdgeChromium([bool]$AlreadyUninstalled) {
@@ -516,7 +564,7 @@ else {
 }
 
 $edgeInstalled = EdgeInstalled
-if (!$UninstallEdge -and !$InstallEdge -and !$InstallWebView) {
+if (!$UninstallEdge -and !$InstallEdge -and !$InstallWebView -and !$ReduceBackground) {
 	$host.UI.RawUI.WindowTitle = "Lynch FPS Boost - Motor Edge"	
 
 	$RemoveEdgeData = $false
@@ -545,6 +593,7 @@ To perform an action, also type its number.
 [3] Install Edge
 [4] Install WebView
 [5] Install both Edge & WebView
+[6] Reduce Edge Background Activity
 '@ -ForegroundColor Cyan
 
 		$userInput = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
@@ -570,10 +619,19 @@ To perform an action, also type its number.
 				$InstallEdge = $true
 				$continue = $true
 			}
+			54 {
+				$ReduceBackground = $true
+				$continue = $true
+			}
 		}
 	}
 
 	Clear-Host
+}
+
+if ($ReduceBackground) {
+	ReduceEdgeBackground
+	Write-Output ''
 }
 
 if ($UninstallEdge) {
