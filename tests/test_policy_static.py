@@ -180,10 +180,16 @@ def test_windows_app_removal_catalog_and_executor_are_wired_safely():
     xbox_selectors = set(xbox_apps["appx_selectors"])
     assert {
         "Microsoft.GamingApp",
+        "Microsoft.GamingServices",
         "Microsoft.XboxApp",
         "Microsoft.XboxIdentityProvider",
         "Microsoft.Xbox.TCUI",
     } <= xbox_selectors
+    assert set(xbox_apps["services_to_disable"]) == {"GamingServices", "GamingServicesNet"}
+    assert {
+        "Registry::HKLM\\SYSTEM\\CurrentControlSet\\Services\\GamingServices",
+        "Registry::HKLM\\SYSTEM\\CurrentControlSet\\Services\\GamingServicesNet",
+    } <= set(xbox_apps["registry_delete_paths"])
     assert "Microsoft.XboxGamingOverlay" not in xbox_selectors
     assert "Microsoft.XboxGameOverlay" not in xbox_selectors
 

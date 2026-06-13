@@ -540,7 +540,16 @@
         "Microsoft.XboxApp",
         "Microsoft.XboxIdentityProvider",
         "Microsoft.XboxSpeechToTextOverlay",
-        "Microsoft.GamingApp"
+        "Microsoft.GamingApp",
+        "Microsoft.GamingServices"
+      ],
+      "services_to_disable": [
+        "GamingServices",
+        "GamingServicesNet"
+      ],
+      "registry_delete_paths": [
+        "Registry::HKLM\\SYSTEM\\CurrentControlSet\\Services\\GamingServices",
+        "Registry::HKLM\\SYSTEM\\CurrentControlSet\\Services\\GamingServicesNet"
       ]
     }
   ],
