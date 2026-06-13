@@ -481,10 +481,10 @@ class PCBoosterHub(LegacyHub):
         quick_box = ctk.CTkFrame(right, fg_color="transparent")
         quick_box.grid(row=1, column=0, sticky="ew", padx=10, pady=(0, 8))
         for selector in [
-            {"name": "Desinstalar Windows Apps", "category": "debloat_servicos"},
+            {"name": "Limpar Arquivos Temporarios", "category": "limpeza_armazenamento"},
+            {"name": "Esvaziar Lixeira do PC", "category": "limpeza_armazenamento"},
+            {"command": "abrir_desfragmentador", "category": "limpeza_armazenamento"},
             {"action": "abrir_menu_dns", "category": "rede_latencia"},
-            {"name": "Gerenciar Plano de Energia", "category": "cpu_energia"},
-            {"name": "Limpar Cache de Apps e Browsers", "category": "limpeza_armazenamento"},
         ]:
             record = self._find_catalog_record(selector)
             if record:
@@ -547,6 +547,8 @@ class PCBoosterHub(LegacyHub):
             if selector.get("name") and record["name"] == selector["name"]:
                 return record
             if selector.get("action") and record["data"].get("acao_especial") == selector["action"]:
+                return record
+            if selector.get("command") and record["data"].get("cmd") == selector["command"]:
                 return record
         return None
 
@@ -616,9 +618,11 @@ class PCBoosterHub(LegacyHub):
         row_hint = f"{record['category_title']} / {record['group']}"
         ctk.CTkLabel(row, text=row_hint, font=font(9), text_color=COLORS["muted"], anchor="w").grid(row=1, column=1, sticky="ew", pady=(0, 8))
 
-        risk_label, risk_color, risk_bg = RISK_THEME.get(record["risk"], RISK_THEME["reversivel"])
-        badge = ctk.CTkLabel(row, text=risk_label, width=96, height=22, fg_color=risk_bg, corner_radius=5, font=font(9, "bold"), text_color=risk_color)
-        badge.grid(row=0, column=2, rowspan=2, padx=8, pady=8)
+        badge = None
+        if record["type"] == "shortcut":
+            risk_label, risk_color, risk_bg = RISK_THEME["atalho"]
+            badge = ctk.CTkLabel(row, text=risk_label, width=96, height=22, fg_color=risk_bg, corner_radius=5, font=font(9, "bold"), text_color=risk_color)
+            badge.grid(row=0, column=2, rowspan=2, padx=8, pady=8)
         ctk.CTkButton(
             row,
             text="Executar",
@@ -637,7 +641,10 @@ class PCBoosterHub(LegacyHub):
         def select(_event):
             self._select_action(record["item_id"])
 
-        for widget in (row, status, title, badge):
+        clickable_widgets = [row, status, title]
+        if badge is not None:
+            clickable_widgets.append(badge)
+        for widget in clickable_widgets:
             widget.bind("<Button-1>", select)
 
     def _create_detail_panel(self, parent, category):

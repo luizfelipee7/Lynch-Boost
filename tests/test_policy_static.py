@@ -150,6 +150,12 @@ def test_main_uses_operational_v2_interface():
     assert "Referencia tecnica" not in ui_text
     assert "Script associado" not in ui_text
     assert "_action_reference" not in ui_text
+    assert '{"name": "Limpar Arquivos Temporarios", "category": "limpeza_armazenamento"}' in ui_text
+    assert '{"name": "Esvaziar Lixeira do PC", "category": "limpeza_armazenamento"}' in ui_text
+    assert '{"command": "abrir_desfragmentador", "category": "limpeza_armazenamento"}' in ui_text
+    assert '{"action": "abrir_menu_dns", "category": "rede_latencia"}' in ui_text
+    assert '{"name": "Desinstalar Windows Apps", "category": "debloat_servicos"}' not in ui_text
+    assert '{"name": "Gerenciar Plano de Energia", "category": "cpu_energia"}' not in ui_text
 
 
 def test_windows_app_removal_catalog_and_executor_are_wired_safely():
