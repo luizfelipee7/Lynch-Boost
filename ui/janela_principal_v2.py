@@ -613,10 +613,8 @@ class PCBoosterHub(LegacyHub):
         title = ctk.CTkLabel(row, text=record["name"], font=font(12, "bold"), text_color=COLORS["text"], anchor="w")
         title.grid(row=0, column=1, sticky="ew", pady=(8, 0))
 
-        ref = self._action_reference(record)
-        if len(ref) > 74:
-            ref = ref[:71] + "..."
-        ctk.CTkLabel(row, text=ref, font=("Consolas", 9), text_color=COLORS["muted"], anchor="w").grid(row=1, column=1, sticky="ew", pady=(0, 8))
+        row_hint = f"{record['category_title']} / {record['group']}"
+        ctk.CTkLabel(row, text=row_hint, font=font(9), text_color=COLORS["muted"], anchor="w").grid(row=1, column=1, sticky="ew", pady=(0, 8))
 
         risk_label, risk_color, risk_bg = RISK_THEME.get(record["risk"], RISK_THEME["reversivel"])
         badge = ctk.CTkLabel(row, text=risk_label, width=96, height=22, fg_color=risk_bg, corner_radius=5, font=font(9, "bold"), text_color=risk_color)
@@ -656,10 +654,9 @@ class PCBoosterHub(LegacyHub):
         risk.grid(row=2, column=0, sticky="w", padx=16, pady=(12, 8))
 
         summary_box, summary = self._create_detail_field(panel, 3, "Resumo operacional", "")
-        ref_box, ref = self._create_detail_field(panel, 4, "Referencia tecnica", "", monospace=True)
         mode_box, mode = self._create_detail_field(
             panel,
-            5,
+            4,
             "Modo de execucao",
             "Execucao individual. Nenhuma fila sera montada.",
         )
@@ -672,7 +669,7 @@ class PCBoosterHub(LegacyHub):
             hover_color=COLORS["blue_hover"],
             font=font(12, "bold"),
         )
-        run_btn.grid(row=6, column=0, sticky="ew", padx=16, pady=(10, 8))
+        run_btn.grid(row=5, column=0, sticky="ew", padx=16, pady=(10, 8))
 
         note = ctk.CTkLabel(
             panel,
@@ -683,7 +680,7 @@ class PCBoosterHub(LegacyHub):
             justify="left",
             wraplength=390,
         )
-        note.grid(row=7, column=0, sticky="ew", padx=16, pady=(0, 10))
+        note.grid(row=6, column=0, sticky="ew", padx=16, pady=(0, 10))
 
         self.detail_panel_widgets[category] = {
             "title": title,
@@ -691,8 +688,6 @@ class PCBoosterHub(LegacyHub):
             "risk": risk,
             "summary_box": summary_box,
             "summary": summary,
-            "ref_box": ref_box,
-            "ref": ref,
             "mode_box": mode_box,
             "mode": mode,
             "run_btn": run_btn,
@@ -773,7 +768,6 @@ class PCBoosterHub(LegacyHub):
         widgets["meta"].configure(text=f"{record['category_title']} / {record['group']}")
         widgets["risk"].configure(text=risk_label, text_color=risk_color, fg_color=risk_bg)
         widgets["summary"].configure(text=self._action_summary(record))
-        widgets["ref"].configure(text=self._action_reference(record))
         widgets["mode"].configure(text="Execucao individual. O Hub nao executa esta acao em lote.")
         widgets["run_btn"].configure(command=lambda rec=record: self._execute_catalog_action(rec))
 
@@ -785,24 +779,12 @@ class PCBoosterHub(LegacyHub):
         if data.get("_fixed") == "edge":
             return "Abre o painel dedicado ao Microsoft Edge, com remocao e reducao de execucao em segundo plano."
         if action in ACOES_SCRIPT:
-            path = ACOES_SCRIPT[action].get("arquivo", "")
-            return f"Executa acao registrada no Hub. Script associado: {path}."
+            return "Executa uma acao registrada no Hub com roteamento, permissao e confirmacao conforme o risco."
         if str(action).startswith("abrir_menu"):
             return "Abre uma interface especializada para configurar varias opcoes relacionadas a esta area."
         if str(action).startswith("abrir_modal"):
             return "Abre um modal premium com explicacao tecnica, confirmacao e controle de aplicacao."
         return "Acao operacional registrada no config.json."
-
-    def _action_reference(self, record):
-        data = record["data"]
-        action = data.get("acao_especial", "")
-        if data.get("_type") == "shortcut":
-            return data.get("cmd", "atalho_nativo")
-        if data.get("_fixed") == "edge":
-            return "ui.menu_edge.MenuEdge"
-        if action in ACOES_SCRIPT:
-            return ACOES_SCRIPT[action].get("arquivo", action)
-        return action or "acao_visual"
 
     def _execute_catalog_action(self, record, clear_log=True):
         if clear_log:
