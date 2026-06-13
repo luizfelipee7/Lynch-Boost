@@ -53,7 +53,7 @@ class MenuDesinstalarAppsWindows(ctk.CTkFrame):
 
         ctk.CTkButton(
             header,
-            text="Exportar JSON",
+            text="Exportar Perfil",
             width=125,
             height=32,
             fg_color="#1F4E79",
@@ -63,7 +63,7 @@ class MenuDesinstalarAppsWindows(ctk.CTkFrame):
 
         ctk.CTkButton(
             header,
-            text="Importar JSON",
+            text="Importar Perfil",
             width=125,
             height=32,
             fg_color="#1F4E79",
@@ -92,14 +92,6 @@ class MenuDesinstalarAppsWindows(ctk.CTkFrame):
         row1 = ctk.CTkFrame(top_bar, fg_color="transparent")
         row1.pack(fill="x", padx=10, pady=10)
 
-        ctk.CTkButton(
-            row1,
-            text="Selecionar Recomendados",
-            width=180,
-            fg_color="#1F4E79",
-            hover_color="#296296",
-            command=self.selecionar_recomendados,
-        ).pack(side="left", padx=5)
         ctk.CTkButton(
             row1,
             text="Selecionar Tudo",
