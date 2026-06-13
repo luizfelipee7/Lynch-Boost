@@ -125,7 +125,6 @@ class PCBoosterHub(LegacyHub):
         self.sidebar_buttons = {}
         self.action_catalog = []
         self.action_records = {}
-        self.action_plan = []
         self.selected_item_by_category = {}
         self.detail_panel_widgets = {}
         self.dashboard_stat_labels = {}
@@ -459,7 +458,7 @@ class PCBoosterHub(LegacyHub):
         self._create_stat_card(stats, 0, "Administrador", "admin")
         self._create_stat_card(stats, 1, "Acoes no Hub", "actions")
         self._create_stat_card(stats, 2, "Pendencia", "reboot")
-        self._create_stat_card(stats, 3, "Plano", "plan")
+        self._create_stat_card(stats, 3, "Execucao", "execution")
 
         body = ctk.CTkFrame(self.dashboard_frame, fg_color="transparent")
         body.grid(row=2, column=0, sticky="nsew")
@@ -652,45 +651,78 @@ class PCBoosterHub(LegacyHub):
         title.grid(row=0, column=0, sticky="ew", padx=16, pady=(16, 4))
         meta = ctk.CTkLabel(panel, text="-", font=font(10, "bold"), text_color=COLORS["muted"], anchor="w")
         meta.grid(row=1, column=0, sticky="ew", padx=16)
+
         risk = ctk.CTkLabel(panel, text="-", height=26, fg_color=COLORS["surface_soft"], corner_radius=5, font=font(10, "bold"))
         risk.grid(row=2, column=0, sticky="w", padx=16, pady=(12, 8))
-        summary = ctk.CTkLabel(panel, text="", font=font(12), text_color=COLORS["muted"], anchor="nw", justify="left", wraplength=390)
-        summary.grid(row=3, column=0, sticky="ew", padx=16, pady=(0, 10))
-        ref = ctk.CTkLabel(panel, text="", font=("Consolas", 10), text_color=COLORS["subtle"], anchor="w", wraplength=390)
-        ref.grid(row=4, column=0, sticky="ew", padx=16, pady=(0, 12))
 
-        actions = ctk.CTkFrame(panel, fg_color="transparent")
-        actions.grid(row=5, column=0, sticky="ew", padx=12, pady=(0, 8))
-        actions.grid_columnconfigure(0, weight=1)
-        actions.grid_columnconfigure(1, weight=1)
-        run_btn = ctk.CTkButton(actions, text="Executar Agora", height=34, fg_color=COLORS["blue"], hover_color=COLORS["blue_hover"], font=font(11, "bold"))
-        run_btn.grid(row=0, column=0, sticky="ew", padx=4)
-        add_btn = ctk.CTkButton(actions, text="Adicionar ao Plano", height=34, fg_color=COLORS["surface_soft"], hover_color=COLORS["border"], border_width=1, border_color=COLORS["border"], font=font(11, "bold"))
-        add_btn.grid(row=0, column=1, sticky="ew", padx=4)
+        summary_box, summary = self._create_detail_field(panel, 3, "Resumo operacional", "")
+        ref_box, ref = self._create_detail_field(panel, 4, "Referencia tecnica", "", monospace=True)
+        mode_box, mode = self._create_detail_field(
+            panel,
+            5,
+            "Modo de execucao",
+            "Execucao individual. Nenhuma fila sera montada.",
+        )
 
-        ctk.CTkFrame(panel, height=1, fg_color=COLORS["border"]).grid(row=6, column=0, sticky="ew", padx=16, pady=8)
-        ctk.CTkLabel(panel, text="Plano de execucao", font=font(13, "bold"), text_color=COLORS["text"], anchor="w").grid(row=7, column=0, sticky="ew", padx=16)
-        plan_box = ctk.CTkScrollableFrame(panel, fg_color="#11141a", border_width=0, corner_radius=6, height=130)
-        plan_box.grid(row=8, column=0, sticky="nsew", padx=16, pady=(8, 8))
+        run_btn = ctk.CTkButton(
+            panel,
+            text="Executar Agora",
+            height=38,
+            fg_color=COLORS["blue"],
+            hover_color=COLORS["blue_hover"],
+            font=font(12, "bold"),
+        )
+        run_btn.grid(row=6, column=0, sticky="ew", padx=16, pady=(10, 8))
 
-        plan_actions = ctk.CTkFrame(panel, fg_color="transparent")
-        plan_actions.grid(row=9, column=0, sticky="ew", padx=12, pady=(0, 14))
-        plan_actions.grid_columnconfigure(0, weight=1)
-        plan_actions.grid_columnconfigure(1, weight=1)
-        ctk.CTkButton(plan_actions, text="Executar Plano", height=32, fg_color=COLORS["green"], hover_color="#16a34a", font=font(11, "bold"), command=self._execute_plan).grid(row=0, column=0, sticky="ew", padx=4)
-        ctk.CTkButton(plan_actions, text="Limpar", height=32, fg_color=COLORS["surface_soft"], hover_color=COLORS["border"], font=font(11, "bold"), command=self._clear_plan).grid(row=0, column=1, sticky="ew", padx=4)
+        note = ctk.CTkLabel(
+            panel,
+            text="A acao selecionada e executada isoladamente para evitar conflito entre scripts sensiveis.",
+            font=font(10),
+            text_color=COLORS["subtle"],
+            anchor="nw",
+            justify="left",
+            wraplength=390,
+        )
+        note.grid(row=7, column=0, sticky="ew", padx=16, pady=(0, 10))
 
         self.detail_panel_widgets[category] = {
             "title": title,
             "meta": meta,
             "risk": risk,
+            "summary_box": summary_box,
             "summary": summary,
+            "ref_box": ref_box,
             "ref": ref,
+            "mode_box": mode_box,
+            "mode": mode,
             "run_btn": run_btn,
-            "add_btn": add_btn,
-            "plan_box": plan_box,
         }
         return panel
+
+    def _create_detail_field(self, parent, row, label, value, monospace=False):
+        box = ctk.CTkFrame(parent, fg_color="#11141a", border_color=COLORS["border_soft"], border_width=1, corner_radius=7)
+        box.grid(row=row, column=0, sticky="ew", padx=16, pady=(0, 8))
+        box.grid_columnconfigure(0, weight=1)
+
+        ctk.CTkLabel(
+            box,
+            text=label,
+            font=font(10, "bold"),
+            text_color=COLORS["muted"],
+            anchor="w",
+        ).grid(row=0, column=0, sticky="ew", padx=10, pady=(8, 1))
+
+        value_label = ctk.CTkLabel(
+            box,
+            text=value,
+            font=("Consolas", 10) if monospace else font(11),
+            text_color=COLORS["text"] if value else COLORS["subtle"],
+            anchor="nw",
+            justify="left",
+            wraplength=390,
+        )
+        value_label.grid(row=1, column=0, sticky="ew", padx=10, pady=(0, 9))
+        return box, value_label
 
     def _create_install_screen(self, category):
         frame = ctk.CTkFrame(self.content_host, fg_color=COLORS["root"], corner_radius=0)
@@ -742,9 +774,8 @@ class PCBoosterHub(LegacyHub):
         widgets["risk"].configure(text=risk_label, text_color=risk_color, fg_color=risk_bg)
         widgets["summary"].configure(text=self._action_summary(record))
         widgets["ref"].configure(text=self._action_reference(record))
+        widgets["mode"].configure(text="Execucao individual. O Hub nao executa esta acao em lote.")
         widgets["run_btn"].configure(command=lambda rec=record: self._execute_catalog_action(rec))
-        widgets["add_btn"].configure(command=lambda rec=record: self._add_to_plan(rec))
-        self._render_plan(category)
 
     def _action_summary(self, record):
         data = record["data"]
@@ -772,65 +803,6 @@ class PCBoosterHub(LegacyHub):
         if action in ACOES_SCRIPT:
             return ACOES_SCRIPT[action].get("arquivo", action)
         return action or "acao_visual"
-
-    def _add_to_plan(self, record):
-        if record["item_id"] not in self.action_plan:
-            self.action_plan.append(record["item_id"])
-            self.log_mensagem(f"Adicionado ao plano: {record['name']}")
-        else:
-            self.log_mensagem(f"Acao ja esta no plano: {record['name']}")
-        self._render_all_plan_views()
-        self._update_dashboard_summary()
-
-    def _clear_plan(self):
-        self.action_plan.clear()
-        self.log_mensagem("Plano de execucao limpo.")
-        self._render_all_plan_views()
-        self._update_dashboard_summary()
-
-    def _render_all_plan_views(self):
-        for category in self.detail_panel_widgets:
-            self._render_plan(category)
-
-    def _render_plan(self, category):
-        widgets = self.detail_panel_widgets.get(category)
-        if not widgets:
-            return
-        box = widgets["plan_box"]
-        for child in box.winfo_children():
-            child.destroy()
-
-        if not self.action_plan:
-            ctk.CTkLabel(box, text="Nenhuma acao no plano.", font=font(10), text_color=COLORS["subtle"], anchor="w").pack(fill="x", padx=8, pady=8)
-            return
-
-        for index, item_id in enumerate(self.action_plan, start=1):
-            record = self.action_records.get(item_id)
-            if not record:
-                continue
-            row = ctk.CTkFrame(box, fg_color=COLORS["surface_alt"], corner_radius=6)
-            row.pack(fill="x", padx=6, pady=3)
-            row.grid_columnconfigure(0, weight=1)
-            ctk.CTkLabel(row, text=f"{index}. {record['name']}", font=font(10, "bold"), text_color=COLORS["text"], anchor="w").grid(row=0, column=0, sticky="ew", padx=8, pady=6)
-            ctk.CTkButton(row, text="X", width=26, height=22, fg_color=COLORS["surface_soft"], hover_color=COLORS["red"], command=lambda iid=item_id: self._remove_from_plan(iid)).grid(row=0, column=1, padx=6, pady=4)
-
-    def _remove_from_plan(self, item_id):
-        if item_id in self.action_plan:
-            self.action_plan.remove(item_id)
-        self._render_all_plan_views()
-        self._update_dashboard_summary()
-
-    def _execute_plan(self):
-        if not self.action_plan:
-            self.log_mensagem("Nenhuma acao no plano.")
-            return
-        plan = [self.action_records[item_id] for item_id in self.action_plan if item_id in self.action_records]
-        self.action_plan.clear()
-        self._render_all_plan_views()
-        self._update_dashboard_summary()
-        self.log_mensagem(f"Executando plano com {len(plan)} acao(oes).")
-        for index, record in enumerate(plan):
-            self.after(index * 700, lambda rec=record: self._execute_catalog_action(rec, clear_log=False))
 
     def _execute_catalog_action(self, record, clear_log=True):
         if clear_log:
@@ -1045,7 +1017,7 @@ class PCBoosterHub(LegacyHub):
             text="Reiniciar" if reboot else "Normal",
             text_color=COLORS["amber"] if reboot else COLORS["green"],
         )
-        self.dashboard_stat_labels["plan"].configure(
-            text=str(len(self.action_plan)),
-            text_color=COLORS["blue"] if self.action_plan else COLORS["text"],
+        self.dashboard_stat_labels["execution"].configure(
+            text="Individual",
+            text_color=COLORS["blue"],
         )

@@ -141,8 +141,12 @@ def test_main_uses_operational_v2_interface():
 
     assert "from ui.janela_principal_v2 import PCBoosterHub" in main_text
     assert "Painel Operacional" in ui_text
-    assert "Plano de execucao" in ui_text
+    assert "Modo de execucao" in ui_text
+    assert "Execucao individual" in ui_text
     assert "_build_action_catalog" in ui_text
+    assert "Plano de execucao" not in ui_text
+    assert "Adicionar ao Plano" not in ui_text
+    assert "action_plan" not in ui_text
 
 
 def test_windows_app_removal_catalog_and_executor_are_wired_safely():
