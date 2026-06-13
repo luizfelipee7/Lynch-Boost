@@ -156,6 +156,8 @@ def test_main_uses_operational_v2_interface():
     assert '{"action": "abrir_menu_dns", "category": "rede_latencia"}' in ui_text
     assert '{"name": "Desinstalar Windows Apps", "category": "debloat_servicos"}' not in ui_text
     assert '{"name": "Gerenciar Plano de Energia", "category": "cpu_energia"}' not in ui_text
+    assert "def _style_action_row" in ui_text
+    assert "for record_id, row in self.item_row_frames.items()" not in ui_text
 
 
 def test_windows_app_removal_catalog_and_executor_are_wired_safely():

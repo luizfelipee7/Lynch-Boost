@@ -616,7 +616,8 @@ class PCBoosterHub(LegacyHub):
         title.grid(row=0, column=1, sticky="ew", pady=(8, 0))
 
         row_hint = f"{record['category_title']} / {record['group']}"
-        ctk.CTkLabel(row, text=row_hint, font=font(9), text_color=COLORS["muted"], anchor="w").grid(row=1, column=1, sticky="ew", pady=(0, 8))
+        hint = ctk.CTkLabel(row, text=row_hint, font=font(9), text_color=COLORS["muted"], anchor="w", cursor="hand2")
+        hint.grid(row=1, column=1, sticky="ew", pady=(0, 8))
 
         badge = None
         if record["type"] == "shortcut":
@@ -641,7 +642,7 @@ class PCBoosterHub(LegacyHub):
         def select(_event):
             self._select_action(record["item_id"])
 
-        clickable_widgets = [row, status, title]
+        clickable_widgets = [row, status, title, hint]
         if badge is not None:
             clickable_widgets.append(badge)
         for widget in clickable_widgets:
@@ -754,17 +755,12 @@ class PCBoosterHub(LegacyHub):
             return
 
         category = record["category"]
+        previous_item_id = self.selected_item_by_category.get(category)
+        if previous_item_id and previous_item_id != item_id:
+            self._style_action_row(previous_item_id, selected=False)
+
         self.selected_item_by_category[category] = item_id
-        for record_id, row in self.item_row_frames.items():
-            try:
-                if record_id == item_id:
-                    row.configure(border_color=COLORS["blue"], fg_color="#1b2638")
-                elif self.item_status_labels.get(record_id) and self.item_status_labels[record_id].cget("text") == "OK":
-                    row.configure(border_color=COLORS["green"], fg_color="#13281c")
-                else:
-                    row.configure(border_color=COLORS["border_soft"], fg_color=COLORS["surface_alt"])
-            except Exception:
-                pass
+        self._style_action_row(item_id, selected=True)
 
         widgets = self.detail_panel_widgets.get(category)
         if not widgets:
@@ -777,6 +773,29 @@ class PCBoosterHub(LegacyHub):
         widgets["summary"].configure(text=self._action_summary(record))
         widgets["mode"].configure(text="Execucao individual. O Hub nao executa esta acao em lote.")
         widgets["run_btn"].configure(command=lambda rec=record: self._execute_catalog_action(rec))
+
+    def _style_action_row(self, item_id, selected=False):
+        row = self.item_row_frames.get(item_id)
+        if not row:
+            return
+
+        status_label = self.item_status_labels.get(item_id)
+        completed = False
+        if status_label:
+            try:
+                completed = status_label.cget("text") == "OK"
+            except Exception:
+                completed = False
+
+        try:
+            if selected:
+                row.configure(border_color=COLORS["blue"], fg_color="#1b2638")
+            elif completed:
+                row.configure(border_color=COLORS["green"], fg_color="#13281c")
+            else:
+                row.configure(border_color=COLORS["border_soft"], fg_color=COLORS["surface_alt"])
+        except Exception:
+            pass
 
     def _action_summary(self, record):
         data = record["data"]
