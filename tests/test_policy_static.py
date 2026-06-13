@@ -132,6 +132,19 @@ def test_visual_performance_script_preserves_font_smoothing():
     assert missing == []
 
 
+def test_main_uses_operational_v2_interface():
+    main_path = PROJECT_ROOT / "main.py"
+    ui_path = PROJECT_ROOT / "ui" / "janela_principal_v2.py"
+
+    main_text = main_path.read_text(encoding="utf-8", errors="replace")
+    ui_text = ui_path.read_text(encoding="utf-8", errors="replace")
+
+    assert "from ui.janela_principal_v2 import PCBoosterHub" in main_text
+    assert "Painel Operacional" in ui_text
+    assert "Plano de execucao" in ui_text
+    assert "_build_action_catalog" in ui_text
+
+
 def test_windows_app_removal_catalog_and_executor_are_wired_safely():
     catalog_path = PROJECT_ROOT / "dados" / "apps_windows_remocao.json"
     executor_path = PROJECT_ROOT / "scripts" / "windows_tweaks" / "script_remover_apps_windows.ps1"
