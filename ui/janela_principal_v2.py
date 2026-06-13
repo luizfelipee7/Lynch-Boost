@@ -273,7 +273,7 @@ class PCBoosterHub(LegacyHub):
         ctk.CTkLabel(footer, text="interface v2", font=font(9), text_color=COLORS["subtle"], anchor="w").pack(fill="x", pady=(2, 0))
 
     def _create_sidebar_button(self, key, title, subtitle, command):
-        row = ctk.CTkFrame(self.sidebar_frame, fg_color="transparent", border_color="transparent", border_width=1, corner_radius=8, cursor="hand2")
+        row = ctk.CTkFrame(self.sidebar_frame, fg_color="transparent", border_color=COLORS["sidebar"], border_width=1, corner_radius=8, cursor="hand2")
         row.pack(fill="x", padx=10, pady=3)
         row.grid_columnconfigure(0, weight=1)
 
@@ -296,7 +296,7 @@ class PCBoosterHub(LegacyHub):
 
         def on_leave(_event):
             if self.active_nav_key != key:
-                row.configure(fg_color="transparent", border_color="transparent")
+                row.configure(fg_color="transparent", border_color=COLORS["sidebar"])
 
         def on_click(_event):
             command()
@@ -314,7 +314,7 @@ class PCBoosterHub(LegacyHub):
             if nav_key == key:
                 row.configure(fg_color=COLORS["surface_alt"], border_color=COLORS["blue"])
             else:
-                row.configure(fg_color="transparent", border_color="transparent")
+                row.configure(fg_color="transparent", border_color=COLORS["sidebar"])
 
     def _inicializar_status(self):
         for category in CATEGORIAS:
