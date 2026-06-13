@@ -11,11 +11,13 @@ param(
 )
 
 $ErrorActionPreference = "Continue"
+$OutputEncoding = [System.Text.Encoding]::UTF8
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 function Write-Status {
     param(
-        [Parameter(Mandatory = $true)]
-        [string]$Message
+        [AllowEmptyString()]
+        [string]$Message = ""
     )
 
     Write-Host $Message

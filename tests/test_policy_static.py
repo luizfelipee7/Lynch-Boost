@@ -174,6 +174,18 @@ def test_windows_app_removal_catalog_and_executor_are_wired_safely():
     assert "Remove-AppxPackage -AllUsers" in executor_text
     assert "Remove-WindowsCapability -Online" in executor_text
     assert "Disable-WindowsOptionalFeature -Online -Remove" in executor_text
+    assert "[AllowEmptyString()]" in executor_text
+
+    xbox_apps = next(item for item in items if item["id"] == "xbox_apps")
+    xbox_selectors = set(xbox_apps["appx_selectors"])
+    assert {
+        "Microsoft.GamingApp",
+        "Microsoft.XboxApp",
+        "Microsoft.XboxIdentityProvider",
+        "Microsoft.Xbox.TCUI",
+    } <= xbox_selectors
+    assert "Microsoft.XboxGamingOverlay" not in xbox_selectors
+    assert "Microsoft.XboxGameOverlay" not in xbox_selectors
 
     config = json.loads(config_path.read_text(encoding="utf-8"))
     debloat = next(item for item in config["debloat_servicos"] if item["nome"] == "Desinstalar Windows Apps")
