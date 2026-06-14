@@ -175,6 +175,10 @@ def test_main_uses_operational_v2_interface():
     assert 'width=3, fg_color=COLORS["blue"]' not in ui_text
     assert "Instalar aplicativos" in ui_text
     assert "Desinstalar apps do Windows" in ui_text
+    assert "self.dashboard_category_progress_labels" in ui_text
+    assert "def _category_progress_color" in ui_text
+    assert "if total and completed >= total" in ui_text
+    assert "def open_category" not in ui_text
     assert "Historico recente" not in ui_text
     assert "recent_events" not in ui_text
     assert "Desfragmentar Disco" in config_text

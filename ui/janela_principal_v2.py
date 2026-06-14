@@ -120,6 +120,7 @@ class PCBoosterHub(LegacyHub):
         self.card_status = {}
         self.card_widgets = {}
         self.card_progress_labels = {}
+        self.dashboard_category_progress_labels = {}
         self.detail_frames = {}
         self.item_status_labels = {}
         self.item_text_labels = {}
@@ -561,7 +562,7 @@ class PCBoosterHub(LegacyHub):
 
     def _create_dashboard_category_row(self, parent, category):
         key = category["key"]
-        row = ctk.CTkFrame(parent, fg_color=COLORS["surface_alt"], border_color=COLORS["border_soft"], border_width=1, corner_radius=8, cursor="hand2")
+        row = ctk.CTkFrame(parent, fg_color=COLORS["surface_alt"], border_color=COLORS["border_soft"], border_width=1, corner_radius=8)
         row.pack(fill="x", padx=10, pady=4)
         row.grid_columnconfigure(0, weight=1)
 
@@ -571,15 +572,11 @@ class PCBoosterHub(LegacyHub):
         total = self.card_status.get(key, {}).get("total", 0)
         completed = len(self.card_status.get(key, {}).get("completados", set()))
         progress = f"{completed}/{total}" if total else ("Painel" if key in ("instalacao", "benchmark_info") else "Sem acoes")
-        ctk.CTkLabel(row, text=progress, font=font(11, "bold"), text_color=COLORS["blue"] if total else COLORS["subtle"]).grid(
+        progress_label = ctk.CTkLabel(row, text=progress, font=font(11, "bold"), text_color=self._category_progress_color(completed, total))
+        progress_label.grid(
             row=0, column=1, rowspan=2, sticky="e", padx=12, pady=8
         )
-
-        def open_category(_event):
-            self.abrir_categoria(key)
-
-        for widget in (row, *row.winfo_children()):
-            widget.bind("<Button-1>", open_category)
+        self.dashboard_category_progress_labels[key] = progress_label
 
     def _create_quick_button(self, parent, record):
         ctk.CTkButton(
@@ -995,9 +992,17 @@ class PCBoosterHub(LegacyHub):
             return
         total = status["total"]
         completed = len(status["completados"])
-        label = self.card_progress_labels.get(category)
-        if label and total > 0:
-            label.configure(text=f"{completed}/{total}", text_color=COLORS["green"] if completed else COLORS["subtle"])
+        color = self._category_progress_color(completed, total)
+        for label in (self.card_progress_labels.get(category), self.dashboard_category_progress_labels.get(category)):
+            if label and total > 0:
+                label.configure(text=f"{completed}/{total}", text_color=color)
+
+    def _category_progress_color(self, completed, total):
+        if total and completed >= total:
+            return COLORS["green"]
+        if completed:
+            return COLORS["blue"]
+        return COLORS["subtle"]
 
     def log_mensagem(self, mensagem, tipo="info"):
         if threading.get_ident() != self._ui_thread_id:
