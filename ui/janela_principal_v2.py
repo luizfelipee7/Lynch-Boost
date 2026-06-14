@@ -130,8 +130,8 @@ class PCBoosterHub(LegacyHub):
         self.selected_item_by_category = {}
         self.detail_panel_widgets = {}
         self.dashboard_stat_labels = {}
-        self.recent_events = []
         self.active_nav_key = None
+        self.sidebar_button_variants = {}
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
@@ -253,7 +253,16 @@ class PCBoosterHub(LegacyHub):
         ctk.CTkLabel(title_box, text="Painel Operacional", font=font(10), text_color=COLORS["muted"], anchor="w").pack(fill="x")
 
         ctk.CTkFrame(self.sidebar_frame, height=1, fg_color=COLORS["border_soft"]).pack(fill="x", padx=14, pady=(0, 10))
-        self._create_sidebar_button("dashboard", "Inicio", "Visao geral e alertas", self.mostrar_dashboard)
+
+        self.sidebar_nav = ctk.CTkScrollableFrame(
+            self.sidebar_frame,
+            fg_color="transparent",
+            scrollbar_button_color=COLORS["border_soft"],
+            scrollbar_button_hover_color=COLORS["border"],
+        )
+        self.sidebar_nav.pack(fill="both", expand=True, padx=8, pady=(0, 8))
+
+        self._create_sidebar_button("dashboard", "Inicio", "Painel inicial", self.mostrar_dashboard, variant="home")
         for category in CATEGORIAS:
             self._create_sidebar_button(
                 category["key"],
@@ -273,31 +282,53 @@ class PCBoosterHub(LegacyHub):
         ).pack(fill="x")
         ctk.CTkLabel(footer, text="interface v2", font=font(9), text_color=COLORS["subtle"], anchor="w").pack(fill="x", pady=(2, 0))
 
-    def _create_sidebar_button(self, key, title, subtitle, command):
-        row = ctk.CTkFrame(self.sidebar_frame, fg_color="transparent", border_color=COLORS["sidebar"], border_width=1, corner_radius=8, cursor="hand2")
-        row.pack(fill="x", padx=10, pady=3)
-        row.grid_columnconfigure(0, weight=1)
-
-        ctk.CTkLabel(row, text=title, font=font(12, "bold"), text_color=COLORS["text"], anchor="w").grid(
-            row=0, column=0, sticky="ew", padx=12, pady=(8, 0)
+    def _create_sidebar_button(self, key, title, subtitle, command, variant="category"):
+        parent = getattr(self, "sidebar_nav", self.sidebar_frame)
+        is_home = variant == "home"
+        row = ctk.CTkFrame(
+            parent,
+            fg_color="#101a2d" if is_home else COLORS["sidebar"],
+            border_color=COLORS["blue"] if is_home else COLORS["border_soft"],
+            border_width=1,
+            corner_radius=8,
+            cursor="hand2",
         )
-        ctk.CTkLabel(row, text=subtitle, font=font(9), text_color=COLORS["muted"], anchor="w").grid(
-            row=1, column=0, sticky="ew", padx=12, pady=(0, 8)
+        row.pack(fill="x", padx=2, pady=3)
+
+        label_column = 1 if is_home else 0
+        progress_column = 2 if is_home else 1
+        if is_home:
+            ctk.CTkFrame(row, width=3, fg_color=COLORS["blue"], corner_radius=2).grid(
+                row=0, column=0, rowspan=2, sticky="nsw", padx=(8, 0), pady=8
+            )
+        row.grid_columnconfigure(label_column, weight=1)
+
+        ctk.CTkLabel(row, text=title, font=font(11, "bold"), text_color=COLORS["text"], anchor="w").grid(
+            row=0, column=label_column, sticky="ew", padx=10, pady=(7, 0)
+        )
+        ctk.CTkLabel(row, text=subtitle, font=font(8), text_color=COLORS["muted"], anchor="w").grid(
+            row=1, column=label_column, sticky="ew", padx=10, pady=(0, 7)
         )
 
         progress = ctk.CTkLabel(row, text="", font=font(9, "bold"), text_color=COLORS["subtle"], anchor="e")
-        progress.grid(row=0, column=1, rowspan=2, padx=(4, 12), sticky="e")
+        progress.grid(row=0, column=progress_column, rowspan=2, padx=(4, 10), sticky="e")
         if key in self.card_status and self.card_status[key]["total"] > 0:
             progress.configure(text=f"0/{self.card_status[key]['total']}")
             self.card_progress_labels[key] = progress
 
         def on_enter(_event):
             if self.active_nav_key != key:
-                row.configure(fg_color=COLORS["surface"], border_color=COLORS["border_soft"])
+                row.configure(
+                    fg_color="#12213a" if is_home else COLORS["surface"],
+                    border_color=COLORS["blue"] if is_home else COLORS["border"],
+                )
 
         def on_leave(_event):
             if self.active_nav_key != key:
-                row.configure(fg_color="transparent", border_color=COLORS["sidebar"])
+                row.configure(
+                    fg_color="#101a2d" if is_home else COLORS["sidebar"],
+                    border_color=COLORS["blue"] if is_home else COLORS["border_soft"],
+                )
 
         def on_click(_event):
             command()
@@ -308,14 +339,18 @@ class PCBoosterHub(LegacyHub):
             widget.bind("<Button-1>", on_click)
 
         self.sidebar_buttons[key] = row
+        self.sidebar_button_variants[key] = variant
 
     def _set_active_nav(self, key):
         self.active_nav_key = key
         for nav_key, row in self.sidebar_buttons.items():
+            variant = self.sidebar_button_variants.get(nav_key, "category")
             if nav_key == key:
                 row.configure(fg_color=COLORS["surface_alt"], border_color=COLORS["blue"])
+            elif variant == "home":
+                row.configure(fg_color="#101a2d", border_color=COLORS["blue"])
             else:
-                row.configure(fg_color="transparent", border_color=COLORS["sidebar"])
+                row.configure(fg_color=COLORS["sidebar"], border_color=COLORS["border_soft"])
 
     def _inicializar_status(self):
         for category in CATEGORIAS:
@@ -476,7 +511,7 @@ class PCBoosterHub(LegacyHub):
 
         right = ctk.CTkFrame(body, fg_color=COLORS["surface"], border_color=COLORS["border"], border_width=1, corner_radius=8)
         right.grid(row=0, column=1, sticky="nsew")
-        right.grid_rowconfigure(4, weight=1)
+        right.grid_rowconfigure(5, weight=1)
         right.grid_columnconfigure(0, weight=1)
         ctk.CTkLabel(right, text="Execucao rapida", font=font(14, "bold"), text_color=COLORS["text"], anchor="w").grid(row=0, column=0, sticky="ew", padx=14, pady=(12, 6))
 
@@ -493,11 +528,32 @@ class PCBoosterHub(LegacyHub):
                 self._create_quick_button(quick_box, record)
 
         ctk.CTkFrame(right, height=1, fg_color=COLORS["border"]).grid(row=2, column=0, sticky="ew", padx=14, pady=8)
-        ctk.CTkLabel(right, text="Historico recente", font=font(13, "bold"), text_color=COLORS["text"], anchor="w").grid(row=3, column=0, sticky="ew", padx=14)
-        self.recent_events_frame = ctk.CTkFrame(right, fg_color="transparent")
-        self.recent_events_frame.grid(row=4, column=0, sticky="nsew", padx=14, pady=(8, 12))
+        ctk.CTkLabel(right, text="Aplicativos", font=font(13, "bold"), text_color=COLORS["text"], anchor="w").grid(row=3, column=0, sticky="ew", padx=14, pady=(0, 6))
+        apps_box = ctk.CTkFrame(right, fg_color="transparent")
+        apps_box.grid(row=4, column=0, sticky="ew", padx=10, pady=(0, 8))
+        ctk.CTkButton(
+            apps_box,
+            text="Instalar aplicativos",
+            height=32,
+            fg_color=COLORS["surface_soft"],
+            hover_color=COLORS["border"],
+            border_color=COLORS["border"],
+            border_width=1,
+            font=font(11, "bold"),
+            command=self.abrir_menu_instalacao,
+        ).pack(fill="x", padx=4, pady=3)
+        ctk.CTkButton(
+            apps_box,
+            text="Desinstalar apps do Windows",
+            height=32,
+            fg_color=COLORS["surface_soft"],
+            hover_color=COLORS["border"],
+            border_color=COLORS["border"],
+            border_width=1,
+            font=font(11, "bold"),
+            command=self.abrir_menu_desinstalar_apps_windows,
+        ).pack(fill="x", padx=4, pady=3)
         self._update_dashboard_summary()
-        self._render_recent_events()
 
     def _create_stat_card(self, parent, column, title, key):
         card = ctk.CTkFrame(parent, fg_color=COLORS["surface"], border_color=COLORS["border"], border_width=1, corner_radius=8)
@@ -813,7 +869,6 @@ class PCBoosterHub(LegacyHub):
     def _execute_catalog_action(self, record, clear_log=True):
         if clear_log:
             self.limpar_console_silencioso()
-        self._record_recent_event(f"Executando: {record['name']}")
 
         if record["type"] == "shortcut":
             self._execute_shortcut(record["data"])
@@ -844,7 +899,6 @@ class PCBoosterHub(LegacyHub):
         self.dashboard_frame.grid(row=0, column=0, sticky="nsew")
         self._set_active_nav("dashboard")
         self._update_dashboard_summary()
-        self._render_recent_events()
 
     def abrir_categoria(self, key):
         self._esconder_tudo()
@@ -972,8 +1026,6 @@ class PCBoosterHub(LegacyHub):
             self.console_box.insert("end", f"\n[{timestamp}] {prefix}  {text}")
             self.console_box.see("end")
             self.console_box.configure(state="disabled")
-        if self._should_record_recent_event(text, prefix, tipo):
-            self._record_recent_event(text)
 
     def limpar_console(self):
         self.console_box.configure(state="normal")
@@ -986,50 +1038,6 @@ class PCBoosterHub(LegacyHub):
         self.console_box.delete("0.0", "end")
         self.console_box.insert("0.0", "Lynch Boost - Motor Online")
         self.console_box.configure(state="disabled")
-
-    def _record_recent_event(self, message):
-        if threading.get_ident() != self._ui_thread_id:
-            self.after(0, lambda msg=message: self._record_recent_event(msg))
-            return
-
-        text = str(message).strip()
-        if not text:
-            return
-        if len(text) > 90:
-            text = text[:87] + "..."
-        from datetime import datetime
-        entry = f"{datetime.now().strftime('%H:%M:%S')}  {text}"
-        if not self.recent_events or self.recent_events[0] != entry:
-            self.recent_events.insert(0, entry)
-            self.recent_events = self.recent_events[:8]
-        self._render_recent_events()
-
-    def _should_record_recent_event(self, text, prefix, tipo):
-        lower = str(text).lower()
-        if tipo == "red" or prefix in {"ERRO", "OK"}:
-            return True
-        important_markers = (
-            "executando via hub",
-            "executando:",
-            "abrindo interface",
-            "iniciando interface",
-            "processo finalizado",
-            "operação cancelada",
-            "operacao cancelada",
-        )
-        return any(marker in lower for marker in important_markers)
-
-    def _render_recent_events(self):
-        frame = getattr(self, "recent_events_frame", None)
-        if not frame:
-            return
-        for child in frame.winfo_children():
-            child.destroy()
-        if not self.recent_events:
-            ctk.CTkLabel(frame, text="Nenhuma acao registrada nesta sessao.", font=font(10), text_color=COLORS["subtle"], anchor="w").pack(fill="x", pady=4)
-            return
-        for event in self.recent_events[:6]:
-            ctk.CTkLabel(frame, text=event, font=font(10), text_color=COLORS["muted"], anchor="w", wraplength=390).pack(fill="x", pady=3)
 
     def _update_dashboard_summary(self):
         if not self.dashboard_stat_labels:

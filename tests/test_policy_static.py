@@ -167,7 +167,13 @@ def test_main_uses_operational_v2_interface():
     assert "import threading" in ui_text
     assert "self._ui_thread_id = threading.get_ident()" in ui_text
     assert "self.after(0, lambda msg=mensagem, msg_type=tipo: self.log_mensagem(msg, msg_type))" in ui_text
-    assert "def _should_record_recent_event" in ui_text
+    assert "self.sidebar_nav = ctk.CTkScrollableFrame" in ui_text
+    assert "variant=\"home\"" in ui_text
+    assert "self.sidebar_button_variants" in ui_text
+    assert "Instalar aplicativos" in ui_text
+    assert "Desinstalar apps do Windows" in ui_text
+    assert "Historico recente" not in ui_text
+    assert "recent_events" not in ui_text
     assert "Desfragmentar Disco" in config_text
     assert "Desfragmentar Disco" in actions_text
     assert "Otimização Inteligente de Unidades" not in config_text
