@@ -550,6 +550,17 @@ class PCBoosterHub(LegacyHub):
             font=font(11, "bold"),
             command=self.abrir_menu_desinstalar_apps_windows,
         ).pack(fill="x", padx=4, pady=3)
+        ctk.CTkButton(
+            apps_box,
+            text="Especificacoes",
+            height=32,
+            fg_color=COLORS["surface_soft"],
+            hover_color=COLORS["border"],
+            border_color=COLORS["border"],
+            border_width=1,
+            font=font(11, "bold"),
+            command=lambda: self.abrir_categoria("benchmark_info"),
+        ).pack(fill="x", padx=4, pady=3)
         self._update_dashboard_summary()
 
     def _create_stat_card(self, parent, column, title, key):

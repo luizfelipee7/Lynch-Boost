@@ -23,9 +23,9 @@ CATEGORIAS = [
     {"key": "gaming",               "emoji": "🎮", "titulo": "Gaming",         "subtitulo": "FPS, Game Mode e DVR"},
     {"key": "rede_latencia",        "emoji": "🌐", "titulo": "Rede / Latência",  "subtitulo": "Rede, CPU e GPU Latência"},
     {"key": "mouse_teclado",        "emoji": "🔌", "titulo": "Dispositivos",    "subtitulo": "Mouse, Teclado e Som"},
-    {"key": "benchmark_info",       "emoji": "📊", "titulo": "Especificações",  "subtitulo": "Hardware e Diagnóstico"},
     {"key": "instalacao",           "emoji": "📦", "titulo": "Instalar",        "subtitulo": "Instale apps úteis"},
     {"key": "debloat_servicos",     "emoji": "🛡️", "titulo": "Desinstalar",     "subtitulo": "Remover apps e componentes"},
+    {"key": "benchmark_info",       "emoji": "📊", "titulo": "Especificações",  "subtitulo": "Hardware e Diagnóstico"},
 ]
 
 TEMAS_CATEGORIAS = {
