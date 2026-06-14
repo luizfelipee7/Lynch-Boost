@@ -76,7 +76,7 @@ GRUPOS_DETALHE = {
                      "Apagar Pasta Windows.old", "BSOD Event Log"],
          "atalhos": []},
         {"titulo": "Otimização de Disco",    "emoji": "💽",
-         "scripts": ["Ativar Cache de Gravação do Disco", "Otimização Inteligente de Unidades",
+         "scripts": ["Ativar Cache de Gravação do Disco", "Desfragmentar Disco",
                      "Desativar Economia de Energia do Disco (HIPM/DIPM)", "Limpar Dispositivos Fantasmas (PnP)"],
          "atalhos": []},
         {"titulo": "Ferramentas de Disco",   "emoji": "🔗",

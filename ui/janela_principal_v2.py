@@ -483,7 +483,7 @@ class PCBoosterHub(LegacyHub):
         for selector in [
             {"name": "Limpar Arquivos Temporarios", "category": "limpeza_armazenamento"},
             {"name": "Esvaziar Lixeira do PC", "category": "limpeza_armazenamento"},
-            {"command": "abrir_desfragmentador", "category": "limpeza_armazenamento"},
+            {"name": "Desfragmentar Disco", "category": "limpeza_armazenamento"},
             {"action": "abrir_menu_dns", "category": "rede_latencia"},
         ]:
             record = self._find_catalog_record(selector)
@@ -537,7 +537,7 @@ class PCBoosterHub(LegacyHub):
             border_color=COLORS["border"],
             border_width=1,
             font=font(11, "bold"),
-            command=lambda rec=record: self._select_and_open_action(rec),
+            command=lambda rec=record: self._execute_catalog_action(rec),
         ).pack(fill="x", padx=4, pady=3)
 
     def _find_catalog_record(self, selector):
@@ -551,10 +551,6 @@ class PCBoosterHub(LegacyHub):
             if selector.get("command") and record["data"].get("cmd") == selector["command"]:
                 return record
         return None
-
-    def _select_and_open_action(self, record):
-        self.abrir_categoria(record["category"])
-        self._select_action(record["item_id"])
 
     def _criar_telas_detalhe(self):
         for category in CATEGORIAS:

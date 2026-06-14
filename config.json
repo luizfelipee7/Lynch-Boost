@@ -135,7 +135,7 @@
       "acao_especial": "executar_ativar_cache_de_gravacao_do_disco"
     },
     {
-      "nome": "Otimização Inteligente de Unidades",
+      "nome": "Desfragmentar Disco",
       "destrutivo": true,
       "acao_especial": "executar_otimizacao_inteligente_de_unidades"
     },

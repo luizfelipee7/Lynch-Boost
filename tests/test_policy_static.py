@@ -135,9 +135,13 @@ def test_visual_performance_script_preserves_font_smoothing():
 def test_main_uses_operational_v2_interface():
     main_path = PROJECT_ROOT / "main.py"
     ui_path = PROJECT_ROOT / "ui" / "janela_principal_v2.py"
+    config_path = PROJECT_ROOT / "config.json"
+    actions_path = PROJECT_ROOT / "core" / "acoes_script.py"
 
     main_text = main_path.read_text(encoding="utf-8", errors="replace")
     ui_text = ui_path.read_text(encoding="utf-8", errors="replace")
+    config_text = config_path.read_text(encoding="utf-8", errors="replace")
+    actions_text = actions_path.read_text(encoding="utf-8", errors="replace")
 
     assert "from ui.janela_principal_v2 import PCBoosterHub" in main_text
     assert "Painel Operacional" in ui_text
@@ -152,12 +156,18 @@ def test_main_uses_operational_v2_interface():
     assert "_action_reference" not in ui_text
     assert '{"name": "Limpar Arquivos Temporarios", "category": "limpeza_armazenamento"}' in ui_text
     assert '{"name": "Esvaziar Lixeira do PC", "category": "limpeza_armazenamento"}' in ui_text
-    assert '{"command": "abrir_desfragmentador", "category": "limpeza_armazenamento"}' in ui_text
+    assert '{"name": "Desfragmentar Disco", "category": "limpeza_armazenamento"}' in ui_text
     assert '{"action": "abrir_menu_dns", "category": "rede_latencia"}' in ui_text
     assert '{"name": "Desinstalar Windows Apps", "category": "debloat_servicos"}' not in ui_text
     assert '{"name": "Gerenciar Plano de Energia", "category": "cpu_energia"}' not in ui_text
+    assert "command=lambda rec=record: self._execute_catalog_action(rec)" in ui_text
+    assert "_select_and_open_action" not in ui_text
     assert "def _style_action_row" in ui_text
     assert "for record_id, row in self.item_row_frames.items()" not in ui_text
+    assert "Desfragmentar Disco" in config_text
+    assert "Desfragmentar Disco" in actions_text
+    assert "Otimização Inteligente de Unidades" not in config_text
+    assert "Otimização Inteligente de Unidades" not in actions_text
 
 
 def test_windows_app_removal_catalog_and_executor_are_wired_safely():
