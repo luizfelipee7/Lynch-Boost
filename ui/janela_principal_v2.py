@@ -287,31 +287,27 @@ class PCBoosterHub(LegacyHub):
         is_home = variant == "home"
         row = ctk.CTkFrame(
             parent,
-            fg_color="#101a2d" if is_home else COLORS["sidebar"],
-            border_color=COLORS["blue"] if is_home else COLORS["border_soft"],
+            fg_color="#171d2a" if is_home else COLORS["sidebar"],
+            border_color="#3a4354" if is_home else COLORS["border_soft"],
             border_width=1,
             corner_radius=8,
             cursor="hand2",
         )
         row.pack(fill="x", padx=2, pady=3)
 
-        label_column = 1 if is_home else 0
-        progress_column = 2 if is_home else 1
-        if is_home:
-            ctk.CTkFrame(row, width=3, fg_color=COLORS["blue"], corner_radius=2).grid(
-                row=0, column=0, rowspan=2, sticky="nsw", padx=(8, 0), pady=8
-            )
+        label_column = 0
+        progress_column = 1
         row.grid_columnconfigure(label_column, weight=1)
 
-        ctk.CTkLabel(row, text=title, font=font(11, "bold"), text_color=COLORS["text"], anchor="w").grid(
-            row=0, column=label_column, sticky="ew", padx=10, pady=(7, 0)
+        ctk.CTkLabel(row, text=title, font=font(13, "bold"), text_color=COLORS["text"], anchor="w").grid(
+            row=0, column=label_column, sticky="ew", padx=12, pady=(8, 0)
         )
-        ctk.CTkLabel(row, text=subtitle, font=font(8), text_color=COLORS["muted"], anchor="w").grid(
-            row=1, column=label_column, sticky="ew", padx=10, pady=(0, 7)
+        ctk.CTkLabel(row, text=subtitle, font=font(10), text_color="#aab4c3", anchor="w").grid(
+            row=1, column=label_column, sticky="ew", padx=12, pady=(1, 8)
         )
 
         progress = ctk.CTkLabel(row, text="", font=font(9, "bold"), text_color=COLORS["subtle"], anchor="e")
-        progress.grid(row=0, column=progress_column, rowspan=2, padx=(4, 10), sticky="e")
+        progress.grid(row=0, column=progress_column, rowspan=2, padx=(4, 12), sticky="e")
         if key in self.card_status and self.card_status[key]["total"] > 0:
             progress.configure(text=f"0/{self.card_status[key]['total']}")
             self.card_progress_labels[key] = progress
@@ -319,15 +315,15 @@ class PCBoosterHub(LegacyHub):
         def on_enter(_event):
             if self.active_nav_key != key:
                 row.configure(
-                    fg_color="#12213a" if is_home else COLORS["surface"],
-                    border_color=COLORS["blue"] if is_home else COLORS["border"],
+                    fg_color="#1d2535" if is_home else COLORS["surface"],
+                    border_color="#4b5568" if is_home else COLORS["border"],
                 )
 
         def on_leave(_event):
             if self.active_nav_key != key:
                 row.configure(
-                    fg_color="#101a2d" if is_home else COLORS["sidebar"],
-                    border_color=COLORS["blue"] if is_home else COLORS["border_soft"],
+                    fg_color="#171d2a" if is_home else COLORS["sidebar"],
+                    border_color="#3a4354" if is_home else COLORS["border_soft"],
                 )
 
         def on_click(_event):
@@ -348,7 +344,7 @@ class PCBoosterHub(LegacyHub):
             if nav_key == key:
                 row.configure(fg_color=COLORS["surface_alt"], border_color=COLORS["blue"])
             elif variant == "home":
-                row.configure(fg_color="#101a2d", border_color=COLORS["blue"])
+                row.configure(fg_color="#171d2a", border_color="#3a4354")
             else:
                 row.configure(fg_color=COLORS["sidebar"], border_color=COLORS["border_soft"])
 
