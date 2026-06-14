@@ -1,4 +1,5 @@
 import os
+import threading
 import customtkinter as ctk
 from PIL import Image
 
@@ -93,6 +94,7 @@ class PCBoosterHub(LegacyHub):
         self.minsize(1160, 740)
         self.resizable(True, True)
         self.configure(fg_color=COLORS["root"])
+        self._ui_thread_id = threading.get_ident()
 
         base_dir = os.path.dirname(os.path.abspath(__file__))
         self.icon_path = os.path.abspath(os.path.join(base_dir, "..", "assets", "logo-ico.ico"))
@@ -948,6 +950,10 @@ class PCBoosterHub(LegacyHub):
             label.configure(text=f"{completed}/{total}", text_color=COLORS["green"] if completed else COLORS["subtle"])
 
     def log_mensagem(self, mensagem, tipo="info"):
+        if threading.get_ident() != self._ui_thread_id:
+            self.after(0, lambda msg=mensagem, msg_type=tipo: self.log_mensagem(msg, msg_type))
+            return
+
         from datetime import datetime
         timestamp = datetime.now().strftime("%H:%M:%S")
         text = str(mensagem).strip()
@@ -966,7 +972,8 @@ class PCBoosterHub(LegacyHub):
             self.console_box.insert("end", f"\n[{timestamp}] {prefix}  {text}")
             self.console_box.see("end")
             self.console_box.configure(state="disabled")
-        self._record_recent_event(text)
+        if self._should_record_recent_event(text, prefix, tipo):
+            self._record_recent_event(text)
 
     def limpar_console(self):
         self.console_box.configure(state="normal")
@@ -981,6 +988,10 @@ class PCBoosterHub(LegacyHub):
         self.console_box.configure(state="disabled")
 
     def _record_recent_event(self, message):
+        if threading.get_ident() != self._ui_thread_id:
+            self.after(0, lambda msg=message: self._record_recent_event(msg))
+            return
+
         text = str(message).strip()
         if not text:
             return
@@ -992,6 +1003,21 @@ class PCBoosterHub(LegacyHub):
             self.recent_events.insert(0, entry)
             self.recent_events = self.recent_events[:8]
         self._render_recent_events()
+
+    def _should_record_recent_event(self, text, prefix, tipo):
+        lower = str(text).lower()
+        if tipo == "red" or prefix in {"ERRO", "OK"}:
+            return True
+        important_markers = (
+            "executando via hub",
+            "executando:",
+            "abrindo interface",
+            "iniciando interface",
+            "processo finalizado",
+            "operação cancelada",
+            "operacao cancelada",
+        )
+        return any(marker in lower for marker in important_markers)
 
     def _render_recent_events(self):
         frame = getattr(self, "recent_events_frame", None)
