@@ -251,7 +251,7 @@ class PCBoosterHub(LegacyHub):
         title_box = ctk.CTkFrame(brand, fg_color="transparent")
         title_box.pack(side="left", fill="x", expand=True)
         ctk.CTkLabel(title_box, text="LYNCH BOOST", font=font(15, "bold"), text_color=COLORS["text"], anchor="w").pack(fill="x")
-        ctk.CTkLabel(title_box, text="Painel Operacional", font=font(10), text_color=COLORS["muted"], anchor="w").pack(fill="x")
+        ctk.CTkLabel(title_box, text="Painel Operacional", font=font(11), text_color=COLORS["muted"], anchor="w").pack(fill="x")
 
         ctk.CTkFrame(self.sidebar_frame, height=1, fg_color=COLORS["border_soft"]).pack(fill="x", padx=14, pady=(0, 10))
 
@@ -303,7 +303,7 @@ class PCBoosterHub(LegacyHub):
         ctk.CTkLabel(row, text=title, font=font(13, "bold"), text_color=COLORS["text"], anchor="w").grid(
             row=0, column=label_column, sticky="ew", padx=12, pady=(8, 0)
         )
-        ctk.CTkLabel(row, text=subtitle, font=font(10), text_color="#aab4c3", anchor="w").grid(
+        ctk.CTkLabel(row, text=subtitle, font=font(11), text_color="#aab4c3", anchor="w").grid(
             row=1, column=label_column, sticky="ew", padx=12, pady=(1, 8)
         )
 
@@ -479,8 +479,8 @@ class PCBoosterHub(LegacyHub):
         ctk.CTkLabel(header, text="Painel Operacional", font=font(28, "bold"), text_color=COLORS["text"], anchor="w").grid(row=0, column=0, sticky="w")
         ctk.CTkLabel(
             header,
-            text="Controle central de acoes, riscos, execucao e historico.",
-            font=font(12),
+            text="Controle central de acoes, riscos e execucao.",
+            font=font(13),
             text_color=COLORS["muted"],
             anchor="w",
         ).grid(row=1, column=0, sticky="w", pady=(2, 0))
@@ -555,7 +555,7 @@ class PCBoosterHub(LegacyHub):
     def _create_stat_card(self, parent, column, title, key):
         card = ctk.CTkFrame(parent, fg_color=COLORS["surface"], border_color=COLORS["border"], border_width=1, corner_radius=8)
         card.grid(row=0, column=column, sticky="ew", padx=(0 if column == 0 else 6, 0 if column == 3 else 6))
-        ctk.CTkLabel(card, text=title, font=font(10, "bold"), text_color=COLORS["muted"], anchor="w").pack(fill="x", padx=12, pady=(10, 0))
+        ctk.CTkLabel(card, text=title, font=font(11, "bold"), text_color=COLORS["muted"], anchor="w").pack(fill="x", padx=12, pady=(10, 0))
         value = ctk.CTkLabel(card, text="-", font=font(20, "bold"), text_color=COLORS["text"], anchor="w")
         value.pack(fill="x", padx=12, pady=(2, 10))
         self.dashboard_stat_labels[key] = value
@@ -567,7 +567,7 @@ class PCBoosterHub(LegacyHub):
         row.grid_columnconfigure(0, weight=1)
 
         ctk.CTkLabel(row, text=category["titulo"], font=font(13, "bold"), text_color=COLORS["text"], anchor="w").grid(row=0, column=0, sticky="ew", padx=12, pady=(8, 0))
-        ctk.CTkLabel(row, text=category["subtitulo"], font=font(10), text_color=COLORS["muted"], anchor="w").grid(row=1, column=0, sticky="ew", padx=12, pady=(0, 8))
+        ctk.CTkLabel(row, text=category["subtitulo"], font=font(11), text_color=COLORS["muted"], anchor="w").grid(row=1, column=0, sticky="ew", padx=12, pady=(0, 8))
 
         total = self.card_status.get(key, {}).get("total", 0)
         completed = len(self.card_status.get(key, {}).get("completados", set()))
@@ -619,7 +619,7 @@ class PCBoosterHub(LegacyHub):
         header.grid_columnconfigure(0, weight=1)
 
         ctk.CTkLabel(header, text=category["titulo"], font=font(24, "bold"), text_color=COLORS["text"], anchor="w").grid(row=0, column=0, sticky="w")
-        ctk.CTkLabel(header, text=category["subtitulo"], font=font(11), text_color=COLORS["muted"], anchor="w").grid(row=1, column=0, sticky="w", pady=(2, 0))
+        ctk.CTkLabel(header, text=category["subtitulo"], font=font(13), text_color=COLORS["muted"], anchor="w").grid(row=1, column=0, sticky="w", pady=(2, 0))
 
         if category["key"] == "config_windows":
             actions = ctk.CTkFrame(header, fg_color="transparent")
@@ -643,7 +643,7 @@ class PCBoosterHub(LegacyHub):
         for record in records:
             if record["group"] != current_group:
                 current_group = record["group"]
-                ctk.CTkLabel(action_list, text=current_group, font=font(12, "bold"), text_color=COLORS["muted"], anchor="w").pack(fill="x", padx=12, pady=(12, 4))
+                ctk.CTkLabel(action_list, text=current_group, font=font(13, "bold"), text_color=COLORS["muted"], anchor="w").pack(fill="x", padx=12, pady=(12, 4))
             self._create_action_row(action_list, record)
 
         panel = self._create_detail_panel(frame, category["key"])
@@ -663,7 +663,7 @@ class PCBoosterHub(LegacyHub):
         title.grid(row=0, column=1, sticky="ew", pady=(8, 0))
 
         row_hint = f"{record['category_title']} / {record['group']}"
-        hint = ctk.CTkLabel(row, text=row_hint, font=font(9), text_color=COLORS["muted"], anchor="w", cursor="hand2")
+        hint = ctk.CTkLabel(row, text=row_hint, font=font(10), text_color=COLORS["muted"], anchor="w", cursor="hand2")
         hint.grid(row=1, column=1, sticky="ew", pady=(0, 8))
 
         badge = None
@@ -702,7 +702,7 @@ class PCBoosterHub(LegacyHub):
 
         title = ctk.CTkLabel(panel, text="Selecione uma acao", font=font(18, "bold"), text_color=COLORS["text"], anchor="w", wraplength=390)
         title.grid(row=0, column=0, sticky="ew", padx=16, pady=(16, 4))
-        meta = ctk.CTkLabel(panel, text="-", font=font(10, "bold"), text_color=COLORS["muted"], anchor="w")
+        meta = ctk.CTkLabel(panel, text="-", font=font(11, "bold"), text_color=COLORS["muted"], anchor="w")
         meta.grid(row=1, column=0, sticky="ew", padx=16)
 
         risk = ctk.CTkLabel(panel, text="-", height=26, fg_color=COLORS["surface_soft"], corner_radius=5, font=font(10, "bold"))
@@ -757,7 +757,7 @@ class PCBoosterHub(LegacyHub):
         ctk.CTkLabel(
             box,
             text=label,
-            font=font(10, "bold"),
+            font=font(11, "bold"),
             text_color=COLORS["muted"],
             anchor="w",
         ).grid(row=0, column=0, sticky="ew", padx=10, pady=(8, 1))

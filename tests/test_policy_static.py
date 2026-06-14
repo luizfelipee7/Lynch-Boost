@@ -171,7 +171,9 @@ def test_main_uses_operational_v2_interface():
     assert "variant=\"home\"" in ui_text
     assert "self.sidebar_button_variants" in ui_text
     assert 'font=font(13, "bold")' in ui_text
-    assert 'font=font(10)' in ui_text
+    assert 'text=subtitle, font=font(11)' in ui_text
+    assert 'text=category["subtitulo"], font=font(13)' in ui_text
+    assert 'text=row_hint, font=font(10)' in ui_text
     assert 'width=3, fg_color=COLORS["blue"]' not in ui_text
     assert "Instalar aplicativos" in ui_text
     assert "Desinstalar apps do Windows" in ui_text
