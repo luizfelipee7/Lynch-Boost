@@ -179,7 +179,8 @@ def test_main_uses_operational_v2_interface():
     assert "Desinstalar apps do Windows" in ui_text
     assert "text=\"Especificacoes\"" in ui_text
     assert 'command=lambda: self.abrir_categoria("benchmark_info")' in ui_text
-    category_order = [match.group(1) for match in re.finditer(r'"key":\s*"([^"]+)"', main_text)]
+    categories_text = (PROJECT_ROOT / "ui" / "janela_principal.py").read_text(encoding="utf-8", errors="replace")
+    category_order = [match.group(1) for match in re.finditer(r'"key":\s*"([^"]+)"', categories_text)]
     assert category_order.index("instalacao") < category_order.index("debloat_servicos") < category_order.index("benchmark_info")
     assert "self.dashboard_category_progress_labels" in ui_text
     assert "def _category_progress_color" in ui_text
