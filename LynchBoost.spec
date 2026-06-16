@@ -2,18 +2,27 @@
 
 from pathlib import Path
 
-from PyInstaller.building.datastruct import Tree
-
 
 ROOT = Path.cwd()
 
+
+def data_tree(source, destination):
+    source_root = ROOT / source
+    entries = []
+    for path in source_root.rglob("*"):
+        if path.is_file():
+            target_dir = Path(destination) / path.relative_to(source_root).parent
+            entries.append((str(path), str(target_dir)))
+    return entries
+
+
 datas = [
-    ("config.json", "."),
-    Tree("assets", prefix="assets"),
-    Tree("dados", prefix="dados"),
-    Tree("scripts/windows_tweaks", prefix="scripts/windows_tweaks"),
-    Tree("scripts/games", prefix="scripts/games"),
-    Tree("scripts/app.exe", prefix="scripts/app.exe"),
+    (str(ROOT / "config.json"), "."),
+    *data_tree("assets", "assets"),
+    *data_tree("dados", "dados"),
+    *data_tree("scripts/windows_tweaks", "scripts/windows_tweaks"),
+    *data_tree("scripts/games", "scripts/games"),
+    *data_tree("scripts/app.exe", "scripts/app.exe"),
 ]
 
 a = Analysis(
